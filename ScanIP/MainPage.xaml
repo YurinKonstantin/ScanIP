@@ -1,0 +1,131 @@
+﻿<Page
+    x:Class="ScanIP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ScanIP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel  VerticalAlignment="Bottom" Margin="12">
+            <TextBlock Text="Ваш IP" FontSize="16" FontStretch="SemiExpanded" Style="{ThemeResource BaseTextBlockStyle}"/>
+            <StackPanel Orientation="Horizontal">
+
+
+                <controls:HeaderedTextBlock Header="IP 4" FontSize="16"  Margin="4"
+           Text="{x:Bind viewIP.MyIp4}"   Orientation="Vertical"/>
+
+                
+                <controls:HeaderedTextBlock Header="IP 6" FontSize="16"  Margin="4"
+           Text="{x:Bind viewIP.MyIp6}"  Orientation="Vertical"/>
+                
+              
+                <controls:HeaderedTextBlock Header="Ваше имя в сети" FontSize="16"  Margin="4"
+           Text="{x:Bind viewIP.MyHost}"  Orientation="Vertical"/>
+            </StackPanel>
+            
+          
+
+        </StackPanel>
+       
+        <CommandBar DefaultLabelPosition="Right" VerticalAlignment="Bottom" Grid.Row="2">
+            <AppBarButton Icon="Play" Content="Старт" Label="Старт" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Stop" Label="Стоп" Click="AppBarButton_Click_1"/>
+            <AppBarButton Icon="Setting" Label="Параметры" FrameworkElement.AllowFocusOnInteraction="True"  IsEnabled="True"  VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <StackPanel>
+
+
+                            <TextBlock Text="Диапозон IP" FontSize="16" FontStretch="SemiExpanded" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBox Text="192.168.1.1" x:Name="St" Header="Начальное значение IP:" Margin="4"/>
+                                    <TextBox Text="192.168.1.255" x:Name="En" Header="Конечное значение IP:" Margin="4"/>
+                                </StackPanel>
+                            <TextBlock Text="Диапозон ПОРТОВ" FontSize="16" FontStretch="SemiExpanded"  Style="{ThemeResource BaseTextBlockStyle}" />
+                            <StackPanel Orientation="Horizontal" >
+
+                                <TextBox Text="0" Header="Начальное значение порта:" x:Name="Sp" Margin="4"/>
+
+                                <TextBox Text="65535" Header="Конечное значение порта:" x:Name="Ep" Margin="4"/>
+                            </StackPanel>
+
+                            <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All items will be removed. Do you want to continue?" Margin="0,0,0,12" Visibility="Collapsed"/>
+                            <Button Content="Yes, empty my cart" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </AppBarButton>
+        </CommandBar>
+        <SplitView x:Name="splitView" Grid.Row="3" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+           IsPaneOpen="True" OpenPaneLength="256" CompactPaneLength="48" DisplayMode="Inline">
+            <SplitView.Pane>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+               
+                        <TextBlock Text="Доступные IP" x:Name="PaneHeader" Margin="60,12,0,0" Style="{StaticResource BaseTextBlockStyle}"/>
+                    
+                 
+                    <ListView x:Name="IpListView" Margin="0,12,0,0" SelectionMode="Single" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="IpListView_SelectionChanged"
+                    ItemsSource="{x:Bind viewIP.ListIP}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:IP">
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind IPname4}"/>
+                                    <TextBlock Text="{x:Bind IPname6}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </Grid>
+            </SplitView.Pane>
+
+            <Grid DataContext="{Binding SelectedItem, ElementName=IpListView}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1198*"/>
+                    <ColumnDefinition Width="47*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                    <TextBlock Text="Открытые порты" x:Name="isScanPortt" Margin="12,12,0,0" Style="{StaticResource BaseTextBlockStyle}"/>
+                    <TextBlock Text="{Binding IsScanPort}"  Margin="12,12,0,0" />
+                </StackPanel>
+               
+
+                <ListView x:Name="PortListView"  Margin="0,12,0,0" SelectionMode="None" Grid.Row="1" VerticalAlignment="Stretch"
+                    >
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:Port">
+                            <StackPanel 
+            Margin="4" Orientation="Horizontal">
+                                <TextBlock Text="{Binding namePort}"/>
+                                <TextBlock Text="{Binding isOpen}" Margin="4,0,0,0"/>
+                               
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </SplitView>
+        <TextBlock x:Name="Sos" Grid.Row="4" Margin="4"/>
+    </Grid>
+</Page>
