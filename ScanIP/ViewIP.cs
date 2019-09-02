@@ -15,10 +15,19 @@ namespace ScanIP
         public ViewIP()
         {
             MyHost= Dns.GetHostName();
-            MyIp4 = Dns.GetHostByName(MyHost).AddressList[Dns.GetHostByName(MyHost).AddressList.Length-1].ToString();
-            MyIp6 = Dns.GetHostByName(MyHost).AddressList[0].ToString();
+            foreach(var dd in Dns.GetHostByName(MyHost).AddressList)
+            {
+                string tip = "IP4";
+                if(dd.AddressFamily.ToString().Contains("6"))
+                {
+                    tip = "IP6";
+                }
+                ListMyIP.Add(new ClassMyIP() {MyIp=dd.ToString(), MytipInt=tip });
+            }
+         
 
         }
+        public ObservableCollection<ClassMyIP> ListMyIP = new ObservableCollection<ClassMyIP>();
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

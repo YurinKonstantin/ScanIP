@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
+   
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
@@ -17,47 +18,52 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <StackPanel  VerticalAlignment="Bottom" Margin="12">
-            <TextBlock Text="Ваш IP" FontSize="16" FontStretch="SemiExpanded" Style="{ThemeResource BaseTextBlockStyle}"/>
-            <StackPanel Orientation="Horizontal">
-
-
-                <controls:HeaderedTextBlock Header="IP 4" FontSize="16"  Margin="4"
-           Text="{x:Bind viewIP.MyIp4}"   Orientation="Vertical"/>
-
-                
-                <controls:HeaderedTextBlock Header="IP 6" FontSize="16"  Margin="4"
-           Text="{x:Bind viewIP.MyIp6}"  Orientation="Vertical"/>
-                
-              
-                <controls:HeaderedTextBlock Header="Ваше имя в сети" FontSize="16"  Margin="4"
-           Text="{x:Bind viewIP.MyHost}"  Orientation="Vertical"/>
-            </StackPanel>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+      
           
+                <controls:HeaderedTextBlock Margin="16" x:Uid="YName" Header="Ваше имя в сети" FontSize="16"  
+           Text="{x:Bind viewIP.MyHost}"  Orientation="Vertical"/>
 
-        </StackPanel>
-       
-        <CommandBar DefaultLabelPosition="Right" VerticalAlignment="Bottom" Grid.Row="2">
-            <AppBarButton Icon="Play" Content="Старт" Label="Старт" Click="AppBarButton_Click"/>
-            <AppBarButton Icon="Stop" Label="Стоп" Click="AppBarButton_Click_1"/>
-            <AppBarButton Icon="Setting" Label="Параметры" FrameworkElement.AllowFocusOnInteraction="True"  IsEnabled="True"  VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
+        <GridView HorizontalAlignment="Left" HorizontalContentAlignment="Left" ItemsSource="{x:Bind viewIP.ListMyIP}" Grid.Column="1" Margin="16"  x:Uid="YIP" Header="Ваш ИП" FontSize="16" FontStretch="SemiExpanded">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="local:ClassMyIP" >
+                    <StackPanel HorizontalAlignment="Left">
+                        <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0"  Text="{x:Bind MytipInt}"/>
+                        <TextBlock HorizontalAlignment="Left" HorizontalTextAlignment="Left" Margin="0,0,0,0"  Text="{x:Bind MyIp}"/>
+                      
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid MaximumRowsOrColumns="4" Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
+        <CommandBar DefaultLabelPosition="Right" VerticalAlignment="Bottom" Grid.Row="2" Grid.ColumnSpan="2">
+            <AppBarButton x:Uid="Start" Icon="Play"  Content="Старшт" Label="Сташрт" Click="AppBarButton_Click"/>
+            <AppBarButton x:Uid="Stop" Icon="Stop" Label="Стоп" Click="AppBarButton_Click_1"/>
+            <AppBarButton x:Uid="Setting" Icon="Setting" Label="Параметры" FrameworkElement.AllowFocusOnInteraction="True"  IsEnabled="True"  VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
                 <FlyoutBase.AttachedFlyout>
                     <Flyout>
-                        <StackPanel>
+                        <StackPanel MinWidth="400" ScrollViewer.HorizontalScrollMode="Disabled">
 
-
-                            <TextBlock Text="Диапозон IP" FontSize="16" FontStretch="SemiExpanded" Style="{ThemeResource BaseTextBlockStyle}"/>
+                            <ToggleSwitch x:Name="turbo" x:Uid="TurboToggle" IsOn="False"/>
+                           
+                            <TextBlock x:Uid="DiapIP" Text="Диапозон IP" FontSize="16" FontStretch="SemiExpanded" Style="{ThemeResource BaseTextBlockStyle}"/>
                                 <StackPanel Orientation="Horizontal" >
-                                    <TextBox Text="192.168.1.1" x:Name="St" Header="Начальное значение IP:" Margin="4"/>
-                                    <TextBox Text="192.168.1.255" x:Name="En" Header="Конечное значение IP:" Margin="4"/>
+                                    <TextBox x:Uid="StIp" Text="192.168.1.1" x:Name="St" Header="Начальное значение IP:" Margin="4"/>
+                                    <TextBox x:Uid="EnIp" Text="192.168.1.255" x:Name="En" Header="Конечное значение IP:" Margin="4"/>
                                 </StackPanel>
-                            <TextBlock Text="Диапозон ПОРТОВ" FontSize="16" FontStretch="SemiExpanded"  Style="{ThemeResource BaseTextBlockStyle}" />
+                            <TextBlock x:Uid="DiapPort" Text="Диапозон ПОРТОВ" FontSize="16" FontStretch="SemiExpanded"  Style="{ThemeResource BaseTextBlockStyle}" />
                             <StackPanel Orientation="Horizontal" >
 
-                                <TextBox Text="0" Header="Начальное значение порта:" x:Name="Sp" Margin="4"/>
+                                <TextBox x:Uid="StP" Text="0" Header="Начальное значение порта:" x:Name="Sp" Margin="4"/>
 
-                                <TextBox Text="65535" Header="Конечное значение порта:" x:Name="Ep" Margin="4"/>
+                                <TextBox x:Uid="EnP" Text="65535" Header="Конечное значение порта:" x:Name="Ep" Margin="4"/>
                             </StackPanel>
 
                             <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All items will be removed. Do you want to continue?" Margin="0,0,0,12" Visibility="Collapsed"/>
@@ -67,7 +73,7 @@
                 </FlyoutBase.AttachedFlyout>
             </AppBarButton>
         </CommandBar>
-        <SplitView x:Name="splitView" Grid.Row="3" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+        <SplitView x:Name="splitView" Grid.Row="3" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" Grid.ColumnSpan="2"
            IsPaneOpen="True" OpenPaneLength="256" CompactPaneLength="48" DisplayMode="Inline">
             <SplitView.Pane>
                 <Grid>
@@ -77,7 +83,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                
-                        <TextBlock Text="Доступные IP" x:Name="PaneHeader" Margin="60,12,0,0" Style="{StaticResource BaseTextBlockStyle}"/>
+                        <TextBlock x:Uid="DostIP" Text="Доступные IP" x:Name="PaneHeader" Margin="60,12,0,0" Style="{StaticResource BaseTextBlockStyle}"/>
                     
                  
                     <ListView x:Name="IpListView" Margin="0,12,0,0" SelectionMode="Single" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="IpListView_SelectionChanged"
@@ -106,7 +112,7 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                    <TextBlock Text="Открытые порты" x:Name="isScanPortt" Margin="12,12,0,0" Style="{StaticResource BaseTextBlockStyle}"/>
+                    <TextBlock x:Uid="OpenPort" Text="Открытые порты" x:Name="isScanPortt" Margin="12,12,0,0" Style="{StaticResource BaseTextBlockStyle}"/>
                     <TextBlock Text="{Binding IsScanPort}"  Margin="12,12,0,0" />
                 </StackPanel>
                
@@ -126,6 +132,6 @@
                 </ListView>
             </Grid>
         </SplitView>
-        <TextBlock x:Name="Sos" Grid.Row="4" Margin="4"/>
+        <TextBlock x:Name="Sos" Grid.Row="4" Margin="4" Grid.ColumnSpan="2"/>
     </Grid>
 </Page>

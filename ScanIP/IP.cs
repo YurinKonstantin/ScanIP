@@ -20,6 +20,7 @@ namespace ScanIP
             // Raise the PropertyChanged event, passing the name of the property whose value has changed.
             this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
+       public ViewIP _ViewIP { get; set; }
         public  string IPname4 { get; set; }
        public string IPname6 { get; set; }
         public ObservableCollection<Port> Ports = new ObservableCollection<Port>();
@@ -63,15 +64,11 @@ namespace ScanIP
 
             try
             {
-                IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(IPname4), 0);
-                Dns.GetHostEntry(IPname4);
-                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                socket.SendTimeout = 50;
-                socket.ReceiveTimeout = 50;
-                socket.NoDelay = true;
+               
+          
                 //socket.Bind(ipPoint);
                 Dns.GetHostEntry(IPname4);
-                Debug.WriteLine(IPname4);
+               
                 return true;
 
             }

@@ -11,6 +11,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking;
@@ -54,9 +55,14 @@ namespace ScanIP
             MessageDialog dd = new MessageDialog(System.Net.Dns.GetHostName() +"\t"+ ss);
           await  dd.ShowAsync();
         }
-
+        Task task;
+        List<Task> list = new List<Task>();
         private async void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            // Detect if Internet can be reached
+          
+
             string ss = St.Text;
             string se = En.Text;
             int portS = Convert.ToInt32(Sp.Text);
@@ -66,21 +72,46 @@ namespace ScanIP
             // адрес сервера
             await Sos.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                Sos.Text = "Поиск доступных IP:";
+                // Sos.Text = "Поиск доступных IP:";
+                Sos.Text = resourceLoader.GetString("SostPoisk");
             });
             cancelTokenSource = new CancellationTokenSource();
             CancellationToken token = cancelTokenSource.Token;
-            bool g= await Task.Run(()=> TCPIPScan(ss, se, portS, portE, token));
+            if(turbo.IsOn)
+            {
+                await Task.Run(() => Scan(ss, se, portS, portE, token));
+              await  waitTask();
+            }
+            else
+            {
+                bool g = await Task.Run(() => TCPIPScan(ss, se, portS, portE, token));
+            }
+            
+           
             
             await Sos.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                Sos.Text = "Поиск доступных IP: " +"Завершено";
+                // Sos.Text = "Поиск доступных IP: " +"Завершено";
+                Sos.Text = resourceLoader.GetString("SostEnd");
             });
-            MessageDialog dd = new MessageDialog("Сканирование сети выбранных значений завершено!", "Завершение сканирования сети");
+            
+            MessageDialog dd = new MessageDialog(resourceLoader.GetString("MesText"), resourceLoader.GetString("MesHead") );
             await dd.ShowAsync();
+        }
+        public async Task waitTask()
+        {
+            while(true)
+            {
+                lock (list)
+                {
+                    Task.WaitAll(list.ToArray());
+                    break;
+                }
+            }
         }
         public async Task<bool> TCPIPScan(string ipStart, string ipEnd, int pS, int pE, CancellationToken token)
         {
+            
             string[] ipS = ipStart.Split(".");
             string[] ipE = ipEnd.Split(".");
             int portS = pS;
@@ -100,11 +131,13 @@ namespace ScanIP
                             }
                             await Sos.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                             {
-                                Sos.Text = "Поиск доступных IP: "+ j + "." + k + "." + h + "." + i.ToString();
+                                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                                Sos.Text = resourceLoader.GetString("SostTec") + j + "." + k + "." + h + "." + i.ToString();
+                                
                             });
-                            if (await LocalPing(j + "." + k + "." + h + "." + i.ToString()))
+                            if (await LocalPing(j.ToString() + "." + k.ToString() + "." + h.ToString() + "." + i.ToString()))
                             {
-                                Debug.WriteLine("YES");
+                               
                                 string ip4 = j + "." + k + "." + h + "." + i.ToString();
                                 string ip6 = "Не опредлено";
                                 string host = "Не опредлено";
@@ -162,9 +195,8 @@ namespace ScanIP
             }
             return true;
         }
-        public bool TCPIPScan(string ipStart, string ipEnd, int pS, int pE, CancellationToken token, bool tt)
+        public async Task<bool> Scan(string ipStart, string ipEnd, int pS, int pE, CancellationToken token)
         {
-            List<IP> newList = new List<IP>();
             string[] ipS = ipStart.Split(".");
             string[] ipE = ipEnd.Split(".");
             int portS = pS;
@@ -177,34 +209,96 @@ namespace ScanIP
                     {
                         for (int i = Convert.ToInt32(ipS[ipS.Length - 1]); i <= Convert.ToInt32(ipE[ipE.Length - 1]); i++)
                         {
-                           
-                            string ip4 = j + "." + k + "." + h + "." + i.ToString();
-                            string ip6 = "Не опредлено";
-                            string host = "Не опредлено";
-                            newList.Add(new IP() { IPname4 = ip4, IPname6 = ip6, MyHost = host });
-                          
+                            string s =  j.ToString() + "." + k.ToString() + "." + h.ToString() + "." + i.ToString();
+
+
+                            Task t = Task.Run(() => TCPIPScan(s, portS, portE, token, true));
+
+                           await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+() =>
+{
+    list.Add(t);
+});
+                            await Sos.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            {
+                                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                                Sos.Text = resourceLoader.GetString("SostTec") + s;
+
+                            });
+
+
                         }
                     }
 
                 }
             }
-            var ff = from ip in newList.AsParallel<IP>() where ip.LocalPingIP == true select ip;
-            Sos.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Sos.Text = "Поиск доступных IP: " + ff.Count().ToString();
-            });
-            foreach (var ip in ff)
-            {
-
-
-             //   await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High,
-   // () =>
-   // {
-        viewIP.ListIP.Add(ip);
-
-  //  });
-            }
             return true;
+
+        }
+        public async void TCPIPScan(string ipStart, int portS, int portE, CancellationToken token, bool tt)
+        {
+            try
+            {
+
+                Debug.WriteLine(ipStart);
+                if (await LocalPing(ipStart))
+                {
+
+                    string ip4 = ipStart;
+                    string ip6 = "Не опредлено";
+                    string host = "Не опредлено";
+                    try
+                    {
+                        host = Dns.GetHostEntry(ipStart).HostName;
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                    try
+                    {
+
+                        foreach (var fd in Dns.GetHostEntry(ipStart).AddressList)
+                        {
+                            try
+                            {
+
+
+                                if (fd.IsIPv6LinkLocal)
+                                {
+                                    ip6 = fd.ToString();
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                    IP iP = new IP() { IPname4 = ip4, IPname6 = ip6, MyHost = host };
+                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+    () =>
+    {
+        viewIP.ListIP.Add(iP);
+
+    });
+                    Task.Run(() => scanPort(portS, portE, iP, iP.IPname4, token));
+
+
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
         private async void IpListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -219,8 +313,11 @@ namespace ScanIP
             }
            
         }
+        ResourceLoader resourceLoader1 = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
         public async void scanPort(int StartPort, int EndPort, IP h, string IPname4, CancellationToken token)
         {
+
+            var ff = from x in Enumerable.Range(0, 10).AsParallel() where new TcpClient().ConnectAsync(IPname4, x).ToString() != "1" select new Port() { namePort = Convert.ToString(x), isOpen = resourceLoader1.GetString("Open") };
             for (int CurrPort = StartPort; CurrPort <= EndPort; CurrPort++)
             {
 
@@ -235,23 +332,27 @@ h.IsScanPort = "";
                 }
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
 () =>
+
 {
-    h.IsScanPort = "Идет поиск открытых портов. Порт: "+ CurrPort.ToString();
+    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+
+    h.IsScanPort = resourceLoader.GetString("TecPort") + CurrPort.ToString();
 });
                 Debug.WriteLine(CurrPort);
                 //Инициализируем новый экземпляр класса 
                 TcpClient TcpScan = new System.Net.Sockets.TcpClient();
                 try
                 {
-                    TcpScan.ReceiveTimeout = 10;
-                    TcpScan.SendTimeout = 10;
+                    TcpScan.ReceiveTimeout = 1;
+                    TcpScan.SendTimeout = 1;
                     //Выполняем подключение клиента к указанному порту заданного узла.
                     await TcpScan.ConnectAsync(IPname4, CurrPort);
                     //Если подключение выполнено успешно то выводим в listBox1
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
 () =>
 {
-    h.Ports.Add(new Port() { namePort = CurrPort.ToString(), isOpen = "Открыт" });
+    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+    h.Ports.Add(new Port() { namePort = CurrPort.ToString(), isOpen = resourceLoader.GetString("Open") });
 });
                 }
                 catch
@@ -266,8 +367,47 @@ h.IsScanPort = "";
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
 () =>
 {
-h.IsScanPort = "Открытые порты";
+    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+    h.IsScanPort = resourceLoader.GetString("OpensPorts");
 });
+        }
+        public async void scanPort(int StartPort, int EndPort, IP h, string IPname4, CancellationToken token, bool turbo)
+        {
+
+           
+
+               
+                try
+                {
+                var ff = from x in Enumerable.Range(StartPort, EndPort).AsParallel() where new TcpClient().ConnectAsync(IPname4, x).ToString() != "1" select new Port() { namePort = Convert.ToString(x), isOpen = resourceLoader1.GetString("Open") };
+
+                foreach (var fff in ff)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+() =>
+{
+    h.IsScanPort = resourceLoader1.GetString("TecPort") + fff.namePort.ToString();
+    h.Ports.Add(new Port() { namePort = fff.namePort, isOpen = fff.isOpen });
+});
+                }
+                   
+
+                }
+                catch(SocketException )
+                {
+
+                 
+
+                }
+
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+() =>
+{
+var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+h.IsScanPort = resourceLoader.GetString("OpensPorts");
+});
+
+
         }
         private async Task<bool> LocalPing(string ip2)//Сканер адресов IP
         {
@@ -275,12 +415,16 @@ h.IsScanPort = "Открытые порты";
             try
             {
                 Debug.WriteLine(ip2);
-                IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(ip2), 0);
-                Dns.GetHostEntry(ip2);
-                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                socket.SendTimeout = 50;
-                socket.ReceiveTimeout = 50;
-              socket.NoDelay = true;
+               // IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(ip2), 0);
+                //  Dns.GetHostEntry(ip2);
+                //  Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                //socket.SendTimeout = 10;
+               // Debug.WriteLine("hhh");
+                //Ping ping = new Ping();
+               //await ping.SendPingAsync(ip2, 10);
+               // Debug.WriteLine("jjkljl");
+                // socket.ReceiveTimeout = 10;
+                //  socket.NoDelay = false;
                 //socket.Bind(ipPoint);
                 Dns.GetHostEntry(ip2);
                 return true;
