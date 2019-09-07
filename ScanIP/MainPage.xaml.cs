@@ -16,6 +16,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking;
 using Windows.Networking.Sockets;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -38,10 +39,129 @@ namespace ScanIP
         public MainPage()
         {
             this.InitializeComponent();
-          
+            
+
+
 
 
         }
+        private int reviewBarrier = 5;
+        int NowreviewBarrier = 0;
+        bool showOt = false;
+        private string reviewKey = "userReviewedApp";
+        private string launchesKey = "userReviewAppLaunches";
+        private string reviewText = "Надеемся, вам нравится наше приложение XXXX.";
+        private string reviewInviteText = "Пожалуйста, оцените наше приложение";
+        private void updateReviewStatus()
+        {
+
+            try
+            {
+
+
+                ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+                Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values["RoamingFontInfo"];
+                if (composite != null)
+                {
+                    showOt = Convert.ToBoolean(composite["Reviewed"]);
+                    Debug.WriteLine(showOt.ToString());
+                    NowreviewBarrier = (int)composite["reviewBarrier"];
+                    Debug.WriteLine(NowreviewBarrier.ToString());
+
+                    if (Convert.ToBoolean(showOt))
+                    {
+                        NowreviewBarrier++;
+                           composite["Reviewed"] = "true";
+                        composite["reviewBarrier"] = NowreviewBarrier;
+                        roamingSettings.Values["RoamingFontInfo"] = composite;
+                    }
+                }
+
+                else
+                {
+
+
+                    // Save a composite setting that will be roamed between devices
+                     composite = new Windows.Storage.ApplicationDataCompositeValue();
+                    Debug.WriteLine("creat");
+                    composite["Reviewed"] = "true";
+                    composite["reviewBarrier"] = 0;
+                    roamingSettings.Values["RoamingFontInfo"] = composite;
+
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+            // load a composite setting that roams between devices
+           
+          
+        }
+
+
+        private async void checkReviews()
+        {
+           
+
+            if (showOt && (NowreviewBarrier == reviewBarrier))
+            {
+                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+                Debug.WriteLine("Show");
+                ContentDialog deleteFileDialog = new ContentDialog
+                {
+                    Title = resourceLoader.GetString("ShowTitle"),
+                    Content = resourceLoader.GetString("ShowContent"),
+                    PrimaryButtonText = resourceLoader.GetString("ShowPrimaryText"),
+                    SecondaryButtonText= resourceLoader.GetString("ShowSecondaryText"),
+                    CloseButtonText = resourceLoader.GetString("ShowCloseText")
+
+                };
+
+                ContentDialogResult result = await deleteFileDialog.ShowAsync();
+
+                // Delete the file if the user clicked the primary button.
+                /// Otherwise, do nothing.
+                if (result == ContentDialogResult.Primary)
+                {
+                    bool result1 = await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-windows-store://review/?ProductId=9N0RCC49K629"));
+                    if(result1)
+                    {
+                        ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+                        Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values["RoamingFontInfo"];
+                        composite["Reviewed"] = "false";
+                        composite["reviewBarrier"] = 0;
+                        roamingSettings.Values["RoamingFontInfo"] = composite;
+                        Debug.WriteLine("Yess false");
+                    }
+
+                }
+                if (result == ContentDialogResult.Secondary)
+                {
+                    ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+                    Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values["RoamingFontInfo"];
+                    composite["Reviewed"] = "true";
+                    composite["reviewBarrier"] = 0;
+                    roamingSettings.Values["RoamingFontInfo"] = composite;
+                    Debug.WriteLine("Yess true");
+                }
+                else
+                {
+                    ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+                    Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values["RoamingFontInfo"];
+                    composite["Reviewed"] = "false";
+                    composite["reviewBarrier"] = 0;
+                    roamingSettings.Values["RoamingFontInfo"] = composite;
+                    Debug.WriteLine("nooo false");
+                }
+
+
+
+            }
+        }
+
 
         CancellationTokenSource cancelTokenSource;
         ViewIP viewIP = new ViewIP();
@@ -97,6 +217,8 @@ namespace ScanIP
             
             MessageDialog dd = new MessageDialog(resourceLoader.GetString("MesText"), resourceLoader.GetString("MesHead") );
             await dd.ShowAsync();
+            updateReviewStatus();
+            checkReviews();
         }
         public async Task waitTask()
         {

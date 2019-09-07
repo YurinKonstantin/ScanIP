@@ -30,18 +30,18 @@
         <GridView HorizontalAlignment="Left" HorizontalContentAlignment="Left" ItemsSource="{x:Bind viewIP.ListMyIP}" Grid.Column="1" Margin="16"  x:Uid="YIP" Header="Ваш ИП" FontSize="16" FontStretch="SemiExpanded">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="local:ClassMyIP" >
-                    <StackPanel HorizontalAlignment="Left">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0"  Text="{x:Bind MytipInt}"/>
-                        <TextBlock HorizontalAlignment="Left" HorizontalTextAlignment="Left" Margin="0,0,0,0"  Text="{x:Bind MyIp}"/>
-                      
-                    </StackPanel>
+                        <TextBlock HorizontalAlignment="Left" HorizontalTextAlignment="Left" Margin="0,0,0,0"  Text="{x:Bind MyIp}" Grid.Row="1"/>
+                    </Grid>
+               
+                
                 </DataTemplate>
             </GridView.ItemTemplate>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid MaximumRowsOrColumns="4" Orientation="Horizontal" HorizontalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
         </GridView>
         <CommandBar DefaultLabelPosition="Right" VerticalAlignment="Bottom" Grid.Row="2" Grid.ColumnSpan="2">
             <AppBarButton x:Uid="Start" Icon="Play"  Content="Старшт" Label="Сташрт" Click="AppBarButton_Click"/>
@@ -88,6 +88,7 @@
                  
                     <ListView x:Name="IpListView" Margin="0,12,0,0" SelectionMode="Single" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="IpListView_SelectionChanged"
                     ItemsSource="{x:Bind viewIP.ListIP}">
+                       
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="local:IP">
                                 <StackPanel>
@@ -100,7 +101,7 @@
 
                 </Grid>
             </SplitView.Pane>
-
+           
             <Grid DataContext="{Binding SelectedItem, ElementName=IpListView}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1198*"/>

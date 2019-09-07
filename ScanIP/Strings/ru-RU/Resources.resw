@@ -153,6 +153,21 @@
   <data name="Setting.Label" xml:space="preserve">
     <value>Параметры</value>
   </data>
+  <data name="ShowCloseText" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="ShowContent" xml:space="preserve">
+    <value>Если Вам есть что рассказать о приложении, мы будем рады выслушать ваши пожилания. \r\nХотите оставить отзыв?</value>
+  </data>
+  <data name="ShowPrimaryText" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="ShowSecondaryText" xml:space="preserve">
+    <value>Позже</value>
+  </data>
+  <data name="ShowTitle" xml:space="preserve">
+    <value>Отзыв о приложении</value>
+  </data>
   <data name="SostEnd" xml:space="preserve">
     <value>Поиск доступных IP:  Завершено</value>
   </data>

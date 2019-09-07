@@ -153,6 +153,21 @@
   <data name="Setting.Label" xml:space="preserve">
     <value>Setting</value>
   </data>
+  <data name="ShowCloseText" xml:space="preserve">
+    <value>Not</value>
+  </data>
+  <data name="ShowContent" xml:space="preserve">
+    <value>If you have something to tell about the application, we will be happy to hear your suggestions. \ r \ nWant to leave a review?</value>
+  </data>
+  <data name="ShowPrimaryText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="ShowSecondaryText" xml:space="preserve">
+    <value>Later</value>
+  </data>
+  <data name="ShowTitle" xml:space="preserve">
+    <value>app review</value>
+  </data>
   <data name="SostEnd" xml:space="preserve">
     <value>Search for Available IPs: Completed</value>
   </data>

@@ -153,6 +153,21 @@
   <data name="Setting.Label" xml:space="preserve">
     <value>Parameter</value>
   </data>
+  <data name="ShowCloseText" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="ShowContent" xml:space="preserve">
+    <value>Wenn Sie etwas über die Bewerbung zu erzählen haben, freuen wir uns über Ihre Vorschläge. \ r \ nMöchten Sie eine Bewertung abgeben?</value>
+  </data>
+  <data name="ShowPrimaryText" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="ShowSecondaryText" xml:space="preserve">
+    <value>Später</value>
+  </data>
+  <data name="ShowTitle" xml:space="preserve">
+    <value>App-Überprüfung</value>
+  </data>
   <data name="SostEnd" xml:space="preserve">
     <value>Suche nach verfügbaren IPs: Abgeschlossen</value>
   </data>

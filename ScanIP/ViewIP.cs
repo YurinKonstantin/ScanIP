@@ -14,15 +14,24 @@ namespace ScanIP
     {
         public ViewIP()
         {
-            MyHost= Dns.GetHostName();
-            foreach(var dd in Dns.GetHostByName(MyHost).AddressList)
+            try
             {
-                string tip = "IP4";
-                if(dd.AddressFamily.ToString().Contains("6"))
+
+
+                MyHost = Dns.GetHostName();
+                foreach (var dd in Dns.GetHostByName(MyHost).AddressList)
                 {
-                    tip = "IP6";
+                    string tip = "IP4";
+                    if (dd.AddressFamily.ToString().Contains("6"))
+                    {
+                        tip = "IP6";
+                    }
+                    ListMyIP.Add(new ClassMyIP() { MyIp = dd.ToString(), MytipInt = tip });
                 }
-                ListMyIP.Add(new ClassMyIP() {MyIp=dd.ToString(), MytipInt=tip });
+            }
+            catch(Exception ex)
+            {
+
             }
          
 
