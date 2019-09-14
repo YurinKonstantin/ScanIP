@@ -185,6 +185,8 @@ namespace ScanIP
 
             string ss = St.Text;
             string se = En.Text;
+           
+           
             int portS = Convert.ToInt32(Sp.Text);
             int portE = Convert.ToInt32(Ep.Text);
             viewIP.ListIP.Clear();
@@ -248,7 +250,6 @@ namespace ScanIP
                         {
                             if (token.IsCancellationRequested)
                             {
-                              
                                 return false;
                             }
                             await Sos.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -333,7 +334,10 @@ namespace ScanIP
                         {
                             string s =  j.ToString() + "." + k.ToString() + "." + h.ToString() + "." + i.ToString();
 
-
+                            if (token.IsCancellationRequested)
+                            {
+                                return false;
+                            }
                             Task t = Task.Run(() => TCPIPScan(s, portS, portE, token, true));
 
                            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
@@ -439,7 +443,7 @@ namespace ScanIP
         public async void scanPort(int StartPort, int EndPort, IP h, string IPname4, CancellationToken token)
         {
 
-            var ff = from x in Enumerable.Range(0, 10).AsParallel() where new TcpClient().ConnectAsync(IPname4, x).ToString() != "1" select new Port() { namePort = Convert.ToString(x), isOpen = resourceLoader1.GetString("Open") };
+          //  var ff = from x in Enumerable.Range(0, 10).AsParallel() where new TcpClient().ConnectAsync(IPname4, x).ToString() != "1" select new Port() { namePort = Convert.ToString(x), isOpen = resourceLoader1.GetString("Open") };
             for (int CurrPort = StartPort; CurrPort <= EndPort; CurrPort++)
             {
 
@@ -460,30 +464,28 @@ h.IsScanPort = "";
 
     h.IsScanPort = resourceLoader.GetString("TecPort") + CurrPort.ToString();
 });
-                Debug.WriteLine(CurrPort);
+               
                 //Инициализируем новый экземпляр класса 
-                TcpClient TcpScan = new System.Net.Sockets.TcpClient();
-                try
+                IPAddress iPAddress = IPAddress.Parse(IPname4);
+                IPEndPoint ep = new IPEndPoint(iPAddress, CurrPort);
+                Socket soc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                IAsyncResult asyncResult = soc.BeginConnect(ep, new AsyncCallback(ConnectCallback), soc);
+                if(!asyncResult.AsyncWaitHandle.WaitOne(30,false))
                 {
-                    TcpScan.ReceiveTimeout = 1;
-                    TcpScan.SendTimeout = 1;
-                    //Выполняем подключение клиента к указанному порту заданного узла.
-                    await TcpScan.ConnectAsync(IPname4, CurrPort);
-                    //Если подключение выполнено успешно то выводим в listBox1
+                    soc.Close();
+                }
+                else
+                {
+                    soc.Close();
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
 () =>
 {
-    var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-    h.Ports.Add(new Port() { namePort = CurrPort.ToString(), isOpen = resourceLoader.GetString("Open") });
+var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+h.Ports.Add(new Port() { namePort = CurrPort.ToString(), isOpen = resourceLoader.GetString("Open") });
 });
-                }
-                catch
-                {
-  
-                    //Если возникло исключение то порт закрыт
 
                 }
-                //Переводим курсор на последнюю строку списка
+
 
             }
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
@@ -493,61 +495,42 @@ h.IsScanPort = "";
     h.IsScanPort = resourceLoader.GetString("OpensPorts");
 });
         }
-        public async void scanPort(int StartPort, int EndPort, IP h, string IPname4, CancellationToken token, bool turbo)
+        public static ManualResetEvent connectDone = new ManualResetEvent(false);
+        public static ManualResetEvent connectDoneIP = new ManualResetEvent(false);
+        private static void ConnectCallback(IAsyncResult ar)
         {
+            try
+            {
+                Socket client = (Socket)ar.AsyncState;
+                client.EndConnect(ar);
+                connectDone.Set();
+            }
+            catch (Exception e)
+            {
 
-           
-
-               
-                try
-                {
-                var ff = from x in Enumerable.Range(StartPort, EndPort).AsParallel() where new TcpClient().ConnectAsync(IPname4, x).ToString() != "1" select new Port() { namePort = Convert.ToString(x), isOpen = resourceLoader1.GetString("Open") };
-
-                foreach (var fff in ff)
-                {
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
-() =>
-{
-    h.IsScanPort = resourceLoader1.GetString("TecPort") + fff.namePort.ToString();
-    h.Ports.Add(new Port() { namePort = fff.namePort, isOpen = fff.isOpen });
-});
-                }
-                   
-
-                }
-                catch(SocketException )
-                {
-
-                 
-
-                }
-
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
-() =>
-{
-var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-h.IsScanPort = resourceLoader.GetString("OpensPorts");
-});
-
-
+            }
         }
+        private static void ConnectCallbackIP(IAsyncResult ar)
+        {
+            try
+            {
+                Socket client = (Socket)ar.AsyncState;
+              
+                client.EndConnect(ar);
+                connectDoneIP.Set();
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+    
         private async Task<bool> LocalPing(string ip2)//Сканер адресов IP
         {
          
             try
             {
-                Debug.WriteLine(ip2);
-               // IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(ip2), 0);
-                //  Dns.GetHostEntry(ip2);
-                //  Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                //socket.SendTimeout = 10;
-               // Debug.WriteLine("hhh");
-                //Ping ping = new Ping();
-               //await ping.SendPingAsync(ip2, 10);
-               // Debug.WriteLine("jjkljl");
-                // socket.ReceiveTimeout = 10;
-                //  socket.NoDelay = false;
-                //socket.Bind(ipPoint);
+            
                 Dns.GetHostEntry(ip2);
                 return true;
                
@@ -562,7 +545,7 @@ h.IsScanPort = resourceLoader.GetString("OpensPorts");
                 return false;
             }
         }
-
+      
         private void AppBarButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);

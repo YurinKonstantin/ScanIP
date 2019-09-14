@@ -61,7 +61,7 @@
                             <TextBlock x:Uid="DiapPort" Text="Диапозон ПОРТОВ" FontSize="16" FontStretch="SemiExpanded"  Style="{ThemeResource BaseTextBlockStyle}" />
                             <StackPanel Orientation="Horizontal" >
 
-                                <TextBox x:Uid="StP" Text="0" Header="Начальное значение порта:" x:Name="Sp" Margin="4"/>
+                                <TextBox x:Uid="StP" Text="1" Header="Начальное значение порта:" x:Name="Sp" Margin="4"/>
 
                                 <TextBox x:Uid="EnP" Text="65535" Header="Конечное значение порта:" x:Name="Ep" Margin="4"/>
                             </StackPanel>
