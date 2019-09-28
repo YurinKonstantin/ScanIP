@@ -38,20 +38,43 @@ namespace ScanIP
     {
         public MainPage()
         {
+            // Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Language", "de-DE");
+            // var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            String localValue = localSettings.Values["langsetting"] as string;
+            int x = 0;
+            if(localSettings==null || localValue == String.Empty)
+            {
+                localValue = "Auto";
+            }
+            if(localValue=="Русский")
+            {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Language", "ru-RU");
+                x = 2;
+            }
+            if (localValue == "English")
+            {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Language", "en-DE");
+                x = 1;
+            }
+            if (localValue == "Deutsch")
+            {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Language", "de-DE");
+                x = 3;
+            }
             this.InitializeComponent();
-            
-
-
+            FontsCombo.SelectedIndex = x;
+            viewIP.NetInfo();
+             myIP();
+     
 
 
         }
+        List<string> lang = new List<string>();
         private int reviewBarrier = 5;
         int NowreviewBarrier = 0;
         bool showOt = false;
-        private string reviewKey = "userReviewedApp";
-        private string launchesKey = "userReviewAppLaunches";
-        private string reviewText = "Надеемся, вам нравится наше приложение XXXX.";
-        private string reviewInviteText = "Пожалуйста, оцените наше приложение";
+    
         private void updateReviewStatus()
         {
 
@@ -167,13 +190,43 @@ namespace ScanIP
         ViewIP viewIP = new ViewIP();
        async void myIP()
         {
-            string ss = String.Empty;
-            for(int i=0; i< Dns.GetHostByName(System.Net.Dns.GetHostName()).AddressList.Length; i++)
+            try
             {
-                ss += System.Net.Dns.GetHostByName(System.Net.Dns.GetHostName()).AddressList[i].ToString() + "\n";
+
+
+                string MyHost = Dns.GetHostName();
+                foreach (var dd in Dns.GetHostByName(MyHost).AddressList)
+                {
+                    string tip = "IP4";
+                    if (dd.AddressFamily.ToString().Contains("6"))
+                    {
+                        tip = "IP6";
+                    }
+                    if (tip == "IP4")
+                    {
+                       // St.Text = dd.ToString().Split(".")[0] + "." + dd.ToString().Split(".")[1] + "." + dd.ToString().Split(".")[2] + "." + "1";
+                      //  En.Text = dd.ToString().Split(".")[0] + "." + dd.ToString().Split(".")[1] + "." + dd.ToString().Split(".")[2] + "." + "255";
+                    }
+
+                }
+                var f = from d in viewIP.ListMyIP where d.Activ == true select d.MyIp4;
+                if(f.Count()==1)
+                {
+                    St.Text = f.ElementAt(1).ToString().Split(".")[0] + "." +f.ElementAt(1).ToString().Split(".")[1] + "." + f.ElementAt(1).ToString().Split(".")[2] + "." + "1";
+                    En.Text = f.ElementAt(1).ToString().Split(".")[0] + "." + f.ElementAt(1).ToString().Split(".")[1] + "." + f.ElementAt(1).ToString().Split(".")[2] + "." + "255";
+                }
+                if (f.Count() > 1)
+                {
+                    St.Text = f.ElementAt(1).ToString().Split(".")[0] + "." + f.ElementAt(1).ToString().Split(".")[1] + "." + f.ElementAt(1).ToString().Split(".")[2] + "." + "1";
+                    En.Text = f.ElementAt(1).ToString().Split(".")[0] + "." + f.ElementAt(1).ToString().Split(".")[1] + "." + f.ElementAt(1).ToString().Split(".")[2] + "." + "255";
+                }
+
+                App.ThemeManager.LoadTheme(ThemeManager.DarkThemePath);
             }
-            MessageDialog dd = new MessageDialog(System.Net.Dns.GetHostName() +"\t"+ ss);
-          await  dd.ShowAsync();
+            catch(Exception ex)
+            {
+
+            }
         }
         Task task;
         List<Task> list = new List<Task>();
@@ -190,7 +243,8 @@ namespace ScanIP
             int portS = Convert.ToInt32(Sp.Text);
             int portE = Convert.ToInt32(Ep.Text);
             viewIP.ListIP.Clear();
-         
+            IpListView.ItemsSource = viewIP.ListIP;
+
             // адрес сервера
             await Sos.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -199,15 +253,10 @@ namespace ScanIP
             });
             cancelTokenSource = new CancellationTokenSource();
             CancellationToken token = cancelTokenSource.Token;
-            if(turbo.IsOn)
-            {
+           
                 await Task.Run(() => Scan(ss, se, portS, portE, token));
               await  waitTask();
-            }
-            else
-            {
-                bool g = await Task.Run(() => TCPIPScan(ss, se, portS, portE, token));
-            }
+             
             
            
             
@@ -233,91 +282,7 @@ namespace ScanIP
                 }
             }
         }
-        public async Task<bool> TCPIPScan(string ipStart, string ipEnd, int pS, int pE, CancellationToken token)
-        {
-            
-            string[] ipS = ipStart.Split(".");
-            string[] ipE = ipEnd.Split(".");
-            int portS = pS;
-           int portE = pE;
-            for (int j = Convert.ToInt32(ipS[0]); j <= Convert.ToInt32(ipE[0]); j++)
-            {
-                for (int k = Convert.ToInt32(ipS[1]); k <= Convert.ToInt32(ipE[1]); k++)
-                {
-                    for (int h = Convert.ToInt32(ipS[2]); h <= Convert.ToInt32(ipE[2]); h++)
-                    {
-                        for (int i = Convert.ToInt32(ipS[ipS.Length - 1]); i <= Convert.ToInt32(ipE[ipE.Length - 1]); i++)
-                        {
-                            if (token.IsCancellationRequested)
-                            {
-                                return false;
-                            }
-                            await Sos.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                            {
-                                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
-                                Sos.Text = resourceLoader.GetString("SostTec") + j + "." + k + "." + h + "." + i.ToString();
-                                
-                            });
-                            if (await LocalPing(j.ToString() + "." + k.ToString() + "." + h.ToString() + "." + i.ToString()))
-                            {
-                               
-                                string ip4 = j + "." + k + "." + h + "." + i.ToString();
-                                string ip6 = "Не опредлено";
-                                string host = "Не опредлено";
-                                try
-                                {
-                                    host = Dns.GetHostEntry(j + "." + k + "." + h + "." + i.ToString()).HostName;
-                                }
-                                catch (Exception)
-                                {
-
-                                }
-                               
-                                try
-                                {
-
-                                    foreach (var fd in Dns.GetHostEntry(j + "." + k + "." + h + "." + i.ToString()).AddressList)
-                                    {
-                                        try
-                                        {
-
-
-                                            if (fd.IsIPv6LinkLocal)
-                                            {
-                                                ip6 = fd.ToString();
-                                            }
-
-                                        }
-                                        catch (Exception ex)
-                                        {
-
-                                        }
-
-                                    }
-
-                                }
-                                catch (Exception)
-                                {
-
-                                }
-                                IP iP = new IP() { IPname4 = ip4, IPname6 = ip6, MyHost=host };
-                                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
-            () =>
-            {
-                viewIP.ListIP.Add(iP);
-
-            });
-                                Task.Run(() => scanPort(portS, portE, iP, iP.IPname4, token));
-
-
-                            }
-                        }
-                    }
-
-                }
-            }
-            return true;
-        }
+       
         public async Task<bool> Scan(string ipStart, string ipEnd, int pS, int pE, CancellationToken token)
         {
             string[] ipS = ipStart.Split(".");
@@ -344,6 +309,7 @@ namespace ScanIP
 () =>
 {
     list.Add(t);
+   // IpListView.ItemsSource = viewIP.ListIP.OrderBy(ip=>ip.IPname4);
 });
                             await Sos.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                             {
@@ -366,13 +332,14 @@ namespace ScanIP
             try
             {
 
-                Debug.WriteLine(ipStart);
+                
                 if (await LocalPing(ipStart))
                 {
 
                     string ip4 = ipStart;
-                    string ip6 = "Не опредлено";
-                    string host = "Не опредлено";
+             
+                    string ip6 =String.Empty;
+                    string host = String.Empty;
                     try
                     {
                         host = Dns.GetHostEntry(ipStart).HostName;
@@ -409,11 +376,13 @@ namespace ScanIP
                     {
 
                     }
-                    IP iP = new IP() { IPname4 = ip4, IPname6 = ip6, MyHost = host };
-                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal,
+                    IP iP = new IP() { IPname4 = ip4, IPname6 =ip6, MyHost = host };
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High,
     () =>
     {
         viewIP.ListIP.Add(iP);
+        IpListView.ItemsSource = viewIP.ListIP.OrderBy(ip => Convert.ToInt32(ip.IPname4.Split('.')[3]));
+
 
     });
                     Task.Run(() => scanPort(portS, portE, iP, iP.IPname4, token));
@@ -496,7 +465,7 @@ h.Ports.Add(new Port() { namePort = CurrPort.ToString(), isOpen = resourceLoader
 });
         }
         public static ManualResetEvent connectDone = new ManualResetEvent(false);
-        public static ManualResetEvent connectDoneIP = new ManualResetEvent(false);
+   
         private static void ConnectCallback(IAsyncResult ar)
         {
             try
@@ -510,42 +479,81 @@ h.Ports.Add(new Port() { namePort = CurrPort.ToString(), isOpen = resourceLoader
 
             }
         }
-        private static void ConnectCallbackIP(IAsyncResult ar)
-        {
-            try
-            {
-                Socket client = (Socket)ar.AsyncState;
-              
-                client.EndConnect(ar);
-                connectDoneIP.Set();
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-    
+      
+       
         private async Task<bool> LocalPing(string ip2)//Сканер адресов IP
         {
          
             try
             {
+
             
-                Dns.GetHostEntry(ip2);
+                 Dns.GetHostEntry(ip2);
+
+
                 return true;
                
             }
             catch(SocketException ee)
             {
-                return false;
-            }
-            catch (Exception ex)
-            {
+                try
+                {
 
+
+                    TcpClient client = new TcpClient();
+                    client.ReceiveTimeout = 100;
+                    client.SendTimeout = 100;
+                    //client.NoDelay = true;
+                   await client.ConnectAsync(ip2, 1);
+                    client.Close();
+                    return true;
+                }
+                catch(SocketException e)
+                {
+                    if (e.ErrorCode == 10061)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                catch(Exception ew)
+                {
+                    return false;
+                }
+              
+          
+            }
+            catch(Exception ex)
+            {
+                try
+                {
+
+
+                    TcpClient client = new TcpClient();
+                    client.ReceiveTimeout = 100;
+                    client.SendTimeout = 100;
+                    //client.NoDelay = true;
+                  await  client.ConnectAsync(ip2, 80);
+                    client.Close();
+                    return true;
+                }
+                catch (SocketException e)
+                {
+                    if (e.ErrorCode == 10061)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception ew)
+                {
+                    return false;
+                }
                 return false;
             }
         }
-      
+       
+
         private void AppBarButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
@@ -554,6 +562,68 @@ h.Ports.Add(new Port() { namePort = CurrPort.ToString(), isOpen = resourceLoader
         private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
             cancelTokenSource.Cancel();
+        }
+
+        private async void AppBarButton_Click_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string hostname = textDNS.Text;
+                viewIP.ListDNSAl.Clear();
+                viewIP.ListDNSIP.Clear();
+                IPHostEntry entry = await Dns.GetHostEntryAsync(hostname);
+                string ip = String.Empty;
+                foreach (IPAddress a in entry.AddressList)
+                {
+
+                    viewIP.ListDNSIP.Add(a.ToString());
+
+                }
+                foreach (string a in entry.Aliases)
+                {
+                    viewIP.ListDNSAl.Add(a.ToString());
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView();
+            MessageDialog dd = new MessageDialog(resourceLoader.GetString("MesText"), resourceLoader.GetString("MesHead"));
+            await dd.ShowAsync();
+
+
+        }
+        private void ColorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Add "using Windows.UI;" for Color and Colors.
+            string colorName = e.AddedItems[0].ToString();
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            switch (colorName)
+            { 
+                case "Auto":
+                  
+                    localSettings.Values["Langsetting"] = "Auto";
+                    this.InitializeComponent();
+                    break;
+                case "English":
+                    localSettings.Values["Langsetting"] = "English";
+                    Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Language", "en-US");
+                    this.InitializeComponent();
+                    break;
+                case "Deutsch":
+                    localSettings.Values["Langsetting"] = "Deutsch";
+                    Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Language", "de-DE");
+                    this.InitializeComponent();
+                    break;
+                case "Русский":
+                    localSettings.Values["Langsetting"] = "Русский";
+                    Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Language", "ru-RU");
+                    this.InitializeComponent();
+                    break;
+
+            }
+         
         }
     }
 }

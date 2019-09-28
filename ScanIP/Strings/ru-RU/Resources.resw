@@ -138,6 +138,9 @@
   <data name="MesText" xml:space="preserve">
     <value>Сканирование сети выбранных значений завершено!</value>
   </data>
+  <data name="NoIterminate" xml:space="preserve">
+    <value>Не определено</value>
+  </data>
   <data name="Open" xml:space="preserve">
     <value>Открыт</value>
   </data>

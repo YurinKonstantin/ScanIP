@@ -138,6 +138,9 @@
   <data name="MesText" xml:space="preserve">
     <value>Scanning the network of selected values is complete!</value>
   </data>
+  <data name="NoIterminate" xml:space="preserve">
+    <value>Undefined</value>
+  </data>
   <data name="Open" xml:space="preserve">
     <value>is open</value>
   </data>

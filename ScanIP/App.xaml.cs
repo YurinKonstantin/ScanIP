@@ -30,8 +30,9 @@ namespace ScanIP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+           // Application.Current.RequestedTheme = ApplicationTheme.Dark;
         }
-
+        public static ThemeManager ThemeManager => (ThemeManager)App.Current.Resources["ThemeManager"];
         /// <summary>
         /// Вызывается при обычном запуске приложения пользователем. Будут использоваться другие точки входа,
         /// например, если приложение запускается для открытия конкретного файла.

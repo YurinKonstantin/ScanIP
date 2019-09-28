@@ -16,33 +16,59 @@ namespace ScanIP
             // Raise the PropertyChanged event, passing the name of the property whose value has changed.
             this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-        string myIp = "127.1.1.1.";
-        public string MyIp
+        string myName = "Name";
+        public string MyName
         {
             get
             {
-                return myIp;
+                return myName;
             }
             set
             {
-                myIp = value;
+                myName = value;
                 OnPropertyChanged();
             }
         }
-        
-        string mytipInt = "IP4";
-        public string MytipInt
+        string myIp4 = "127.1.1.1.";
+        public string MyIp4
         {
             get
             {
-                return mytipInt;
+                return myIp4;
             }
             set
             {
-                mytipInt = value;
+                myIp4 = value;
                 OnPropertyChanged();
             }
         }
+        string myIp6;
+        public string MyIp6
+        {
+            get
+            {
+                return myIp6;
+            }
+            set
+            {
+                myIp6 = value;
+                OnPropertyChanged();
+            }
+        }
+        string mytipInt4 = "IP4";
+        public string MytipInt4
+        {
+            get
+            {
+                return mytipInt4;
+            }
+            set
+            {
+                mytipInt4 = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool Activ = false;
         
     }
 }
