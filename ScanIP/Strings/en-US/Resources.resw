@@ -132,6 +132,9 @@
   <data name="EnP.Header" xml:space="preserve">
     <value>Final port value:</value>
   </data>
+  <data name="IpListView.Header" xml:space="preserve">
+    <value>Available IP</value>
+  </data>
   <data name="MesHead" xml:space="preserve">
     <value>Network Scan Completion</value>
   </data>

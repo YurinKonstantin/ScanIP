@@ -66,7 +66,17 @@ namespace ScanIP
             FontsCombo.SelectedIndex = x;
             viewIP.NetInfo();
              myIP();
-     
+
+            ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            Windows.Storage.ApplicationDataCompositeValue composite = (ApplicationDataCompositeValue)roamingSettings.Values["SettingFontInfo"];
+            if (composite != null)
+            {
+                St.Text= composite["StartIP"] as string;
+                En.Text= composite["EndIP"] as string;
+                Sp.Text=composite["StartPort"] as string;
+                Ep.Text= composite["EndPort"] as string;
+            }
+
 
 
         }
@@ -382,6 +392,16 @@ namespace ScanIP
     {
         viewIP.ListIP.Add(iP);
         IpListView.ItemsSource = viewIP.ListIP.OrderBy(ip => Convert.ToInt32(ip.IPname4.Split('.')[3]));
+        int x = 0;
+        foreach(var f in IpListView.Items)
+        {
+            if(select.IPname4==((IP)f).IPname4)
+            {
+                IpListView.SelectedIndex=x;
+            }
+            x++;
+        }
+        //PortListView.ItemsSource = select.Ports;
 
 
     });
@@ -395,16 +415,15 @@ namespace ScanIP
 
             }
         }
+        public IP select = new IP();
         private async void IpListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var gg = (IP)((ListView)sender).SelectedItem;
 
             if (gg != null)
             {
-
-
                 PortListView.ItemsSource = gg.Ports;
-                
+                select = gg;
             }
            
         }
@@ -556,7 +575,7 @@ h.Ports.Add(new Port() { namePort = CurrPort.ToString(), isOpen = resourceLoader
 
         private void AppBarButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+            splitView.IsPaneOpen = !splitView.IsPaneOpen;
         }
 
         private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
@@ -624,6 +643,18 @@ h.Ports.Add(new Port() { namePort = CurrPort.ToString(), isOpen = resourceLoader
 
             }
          
+        }
+
+        private void AppBarButton_Tapped_1(object sender, TappedRoutedEventArgs e)
+        {
+            
+            ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+            Windows.Storage.ApplicationDataCompositeValue composite = new Windows.Storage.ApplicationDataCompositeValue();
+            composite["StartIP"] = St.Text;
+            composite["EndIP"] = En.Text;
+            composite["StartPort"] = Sp.Text;
+            composite["EndPort"] = Ep.Text;
+            roamingSettings.Values["SettingFontInfo"] = composite;
         }
     }
 }

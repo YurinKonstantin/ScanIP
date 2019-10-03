@@ -132,6 +132,9 @@
   <data name="EnP.Header" xml:space="preserve">
     <value>Конечное значение порта:</value>
   </data>
+  <data name="IpListView.Header" xml:space="preserve">
+    <value>Доступные IP</value>
+  </data>
   <data name="MesHead" xml:space="preserve">
     <value>Завершение сканирования сети</value>
   </data>

@@ -50,78 +50,81 @@
             <x:String>Deutsch</x:String>
         </ComboBox>
         <Pivot Grid.Row="1" Grid.ColumnSpan="2" Margin="0"  >
-            <PivotItem Header="IP Scanner" Margin="0" 
-                    >
+            <PivotItem Header="IP Scanner" Margin="0" Background="#FFE6E6E6">
                 <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="256"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="1" Background="WhiteSmoke">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Uid="DostIP" Text="Доступные IP" x:Name="PaneHeader" Grid.Row="1" Margin="60,12,0,0" Style="{StaticResource BaseTextBlockStyle}" />
+                        <ListView x:Name="IpListView"  SelectionMode="Single"  Grid.Row="2" VerticalAlignment="Stretch" Background="WhiteSmoke" SelectionChanged="IpListView_SelectionChanged"
+                    ItemsSource="{x:Bind viewIP.ListIP}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="local:IP">
+                                    <StackPanel Margin="4">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="IP4:"/>
+                                            <TextBlock Text="{x:Bind IPname4}" Margin="2,0,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="IP6: "/>
+                                            <TextBlock Text="{x:Bind IPname6}" Margin="2,0,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Name: "/>
+                                            <TextBlock Text="{x:Bind  MyHost}" Margin="2,0,0,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
 
-                    <CommandBar DefaultLabelPosition="Right" VerticalAlignment="Bottom" Grid.Row="0" 
-                    >
-                        <AppBarButton x:Uid="Start" Icon="Play"  Content="Старшт" Label="Сташрт" Click="AppBarButton_Click" 
-                  />
+                        </ListView>
+                    </Grid>
+                    <CommandBar DefaultLabelPosition="Right" VerticalAlignment="Bottom" Grid.Row="0" Grid.ColumnSpan="2">
+                        <AppBarButton x:Uid="Start" Icon="Play"  Content="Старшт" Label="Сташрт" Click="AppBarButton_Click"/>
                     <AppBarButton x:Uid="Stop" Icon="Stop" Label="Стоп" Click="AppBarButton_Click_1"/>
                     <AppBarButton x:Uid="Setting" Icon="Setting" Label="Параметры" FrameworkElement.AllowFocusOnInteraction="True"  IsEnabled="True"  VerticalAlignment="Stretch"   Tapped="AppBarButton_Tapped">
-                        <FlyoutBase.AttachedFlyout>
-                            <Flyout>
-                                    <StackPanel MinWidth="400" ScrollViewer.HorizontalScrollMode="Disabled">
-                                        <TextBlock x:Uid="DiapIP" Text="Диапозон IP" FontSize="16" FontStretch="SemiExpanded" Style="{ThemeResource BaseTextBlockStyle}"/>
-                                    <StackPanel>
-                                        <TextBox x:Uid="StIp" Text="192.168.1.1" x:Name="St" Header="Начальное значение IP:" Margin="4"/>
-                                        <TextBox x:Uid="EnIp" Text="192.168.1.255" x:Name="En" Header="Конечное значение IP:" Margin="4"/>
-                                    </StackPanel>
-                                    <TextBlock x:Uid="DiapPort" Text="Диапозон ПОРТОВ" FontSize="16" FontStretch="SemiExpanded"  Style="{ThemeResource BaseTextBlockStyle}" Margin="0,4,0,0"/>
-                                        <StackPanel>
-                                            <TextBox x:Uid="StP" Text="1" Header="Начальное значение порта:" x:Name="Sp" Margin="4"/>
-                                            <TextBox x:Uid="EnP" Text="65535" Header="Конечное значение порта:" x:Name="Ep" Margin="4"/>
-                                        </StackPanel>
-                                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All items will be removed. Do you want to continue?" Margin="0,0,0,12" Visibility="Collapsed"/>
-                                    <Button Content="Yes, empty my cart" Visibility="Collapsed"/>
-                                </StackPanel>
-                            </Flyout>
-                        </FlyoutBase.AttachedFlyout>
+                  
+                     
                     </AppBarButton>
                 </CommandBar>
-                    <SplitView x:Name="splitView" Grid.Row="1"
-           IsPaneOpen="True" OpenPaneLength="256" CompactPaneLength="48" DisplayMode="Inline">
-                    <SplitView.Pane>
-                        <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock x:Uid="DostIP" Text="Доступные IP" x:Name="PaneHeader" Grid.Row="1" Margin="60,12,0,0" Style="{StaticResource BaseTextBlockStyle}"/>
-                                <ListView x:Name="IpListView" Margin="0,12,0,0" SelectionMode="Single" Grid.Row="2" VerticalAlignment="Stretch" SelectionChanged="IpListView_SelectionChanged"
-                    ItemsSource="{x:Bind viewIP.ListIP}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="local:IP">
-                                            <StackPanel Margin="4">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="IP4:"/>
-                                                    <TextBlock Text="{x:Bind IPname4}" Margin="2,0,0,0"/>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="IP6: "/>
-                                                    <TextBlock Text="{x:Bind IPname6}" Margin="2,0,0,0"/>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Name: "/>
-                                                    <TextBlock Text="{x:Bind  MyHost}" Margin="2,0,0,0"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-
-                                </ListView>
-                            </Grid>
-                    </SplitView.Pane>
-
-                    <Grid DataContext="{Binding SelectedItem, ElementName=IpListView}">
+                    <SplitView x:Name="splitView" Grid.Row="1" Grid.Column="1"
+           IsPaneOpen="True" OpenPaneLength="360" PanePlacement="Right" CompactPaneLength="0" DisplayMode="Inline">
+                        <SplitView.Pane >
+                            <StackPanel ScrollViewer.HorizontalScrollMode="Disabled" Margin="16">
+                                <CommandBar>
+                                    <AppBarButton Icon="Save" Label="Save" Tapped="AppBarButton_Tapped_1"/>
+                                </CommandBar>
+                                <TextBlock x:Uid="DiapIP" Text="Диапозон IP" Margin="4,0,0,0" FontSize="16" FontStretch="SemiExpanded" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel>
+                                    <TextBox x:Uid="StIp" Text="192.168.1.1" x:Name="St" Header="Начальное значение IP:" Margin="4"/>
+                                    <TextBox x:Uid="EnIp" Text="192.168.1.255" x:Name="En" Header="Конечное значение IP:" Margin="4"/>
+                                </StackPanel>
+                                <TextBlock x:Uid="DiapPort" Text="Диапозон ПОРТОВ" FontSize="16" Margin="4,16,0,0" FontStretch="SemiExpanded"  Style="{ThemeResource BaseTextBlockStyle}"/>
+                                <StackPanel>
+                                    <TextBox x:Uid="StP" Text="1" Header="Начальное значение порта:" x:Name="Sp" Margin="4"/>
+                                    <TextBox x:Uid="EnP" Text="65535" Header="Конечное значение порта:" x:Name="Ep" Margin="4"/>
+                                </StackPanel>
+                                <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All items will be removed. Do you want to continue?" Margin="0,0,0,12" Visibility="Collapsed"/>
+                                <Button Content="Yes, empty my cart" Visibility="Collapsed"/>
+                            </StackPanel>
+                        </SplitView.Pane>
+                        <SplitView.Content>
+                            
+                      
+                    <Grid DataContext="{Binding SelectedItem, ElementName=IpListView}" Background="White">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1198*"/>
                             <ColumnDefinition Width="47*"/>
@@ -158,8 +161,14 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
-                </SplitView>
-                    <TextBlock x:Name="Sos" Grid.Row="2" Margin="4" />
+                     
+                        
+                        
+                        
+                        
+                        </SplitView.Content>
+                    </SplitView>
+                    <TextBlock x:Name="Sos" Grid.Row="2" Margin="4" Grid.ColumnSpan="2"/>
                  
                 </Grid>
           </PivotItem>
