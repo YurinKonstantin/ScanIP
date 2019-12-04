@@ -30,7 +30,7 @@ namespace ScanIP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-           // Application.Current.RequestedTheme = ApplicationTheme.Dark;
+           Application.Current.RequestedTheme = ApplicationTheme.Light;
         }
         public static ThemeManager ThemeManager => (ThemeManager)App.Current.Resources["ThemeManager"];
         /// <summary>
@@ -67,7 +67,7 @@ namespace ScanIP
                     // Если стек навигации не восстанавливается для перехода к первой странице,
                     // настройка новой страницы путем передачи необходимой информации в качестве параметра
                     // навигации
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(NavigationView1), e.Arguments);
                 }
                 // Обеспечение активности текущего окна
                 Window.Current.Activate();

@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DiapIP.Text" xml:space="preserve">
-    <value>Диапозон IP</value>
+    <value>Диапазон IP</value>
   </data>
   <data name="DiapPort.Text" xml:space="preserve">
-    <value>Диапозон ПОРТОВ</value>
+    <value>Диапазон портов</value>
   </data>
   <data name="DostIP.Text" xml:space="preserve">
     <value>Доступные IP</value>
@@ -163,7 +163,7 @@
     <value>Нет</value>
   </data>
   <data name="ShowContent" xml:space="preserve">
-    <value>Если Вам есть что рассказать о приложении, мы будем рады выслушать ваши пожилания. \r\nХотите оставить отзыв?</value>
+    <value>Если вам есть, что рассказать о приложении, мы будем рады выслушать ваши пожелания. Хотите оставить отзыв?</value>
   </data>
   <data name="ShowPrimaryText" xml:space="preserve">
     <value>Да</value>

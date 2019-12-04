@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="ScanIP.PageSetting"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ScanIP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Margin="48">
+        <StackPanel>
+
+            <TextBlock Text="Language:" Style="{ThemeResource BaseTextBlockStyle}"/>
+            <RadioButton x:Name="Option1RadioButton" IsChecked="True" Tag="Auto" Content="Auto" Checked="Option1RadioButton_Checked"/>
+            <RadioButton x:Name="Option2RadioButton" Content="English" Tag="English" Checked="Option1RadioButton_Checked"/>
+            <RadioButton x:Name="Option3RadioButton" Content="Русский" Tag="Русский" Checked="Option1RadioButton_Checked"/>
+            <RadioButton x:Name="Option4RadioButton" Content="Deutsch" Tag="Deutsch" Checked="Option1RadioButton_Checked"/>
+            <RadioButton x:Name="Option5RadioButton" Content="日本人" Tag="Japanese" Checked="Option1RadioButton_Checked"/>
+            <RadioButton x:Name="Option6RadioButton" Content="Le français" Tag="French" Checked="Option1RadioButton_Checked"/>
+
+        </StackPanel>
+    </Grid>
+</Page>

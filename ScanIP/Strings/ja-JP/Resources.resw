@@ -118,99 +118,99 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DiapIP.Text" xml:space="preserve">
-    <value>IP range</value>
+    <value>IP範囲</value>
   </data>
   <data name="DiapPort.Text" xml:space="preserve">
-    <value>Port range</value>
+    <value>ポート範囲</value>
   </data>
   <data name="DostIP.Text" xml:space="preserve">
-    <value>Available IP</value>
+    <value>利用可能なIP</value>
   </data>
   <data name="EnIp.Header" xml:space="preserve">
-    <value>Final IP value:</value>
+    <value>最終IP値：</value>
   </data>
   <data name="EnP.Header" xml:space="preserve">
-    <value>Final port value:</value>
+    <value>最終ポート値：</value>
   </data>
   <data name="IpListView.Header" xml:space="preserve">
-    <value>Available IP</value>
+    <value>利用可能なIP</value>
   </data>
   <data name="MesHead" xml:space="preserve">
-    <value>Completing a network scan</value>
+    <value>ネットワークスキャンの完了</value>
   </data>
   <data name="MesText" xml:space="preserve">
-    <value>Scanning of the network of selected values is complete!</value>
+    <value>選択した値のネットワークのスキャンが完了しました！</value>
   </data>
   <data name="NoIterminate" xml:space="preserve">
-    <value>Undefined</value>
+    <value>定義されていない</value>
   </data>
   <data name="Open" xml:space="preserve">
-    <value>is open</value>
+    <value>開く</value>
   </data>
   <data name="OpenPort.Text" xml:space="preserve">
-    <value>Open ports</value>
+    <value>オープンポート</value>
   </data>
   <data name="OpensPorts" xml:space="preserve">
-    <value>Open ports</value>
+    <value>オープンポート</value>
   </data>
   <data name="Setting.Content" xml:space="preserve">
-    <value>Setting</value>
+    <value>パラメータ</value>
   </data>
   <data name="Setting.Label" xml:space="preserve">
-    <value>Setting</value>
+    <value>パラメータ</value>
   </data>
   <data name="ShowCloseText" xml:space="preserve">
-    <value>Not</value>
+    <value>いや</value>
   </data>
   <data name="ShowContent" xml:space="preserve">
-    <value>If you have something to tell about the application, we will be happy to hear your wishes. Want to leave a review?</value>
+    <value>アプリケーションについて何かお伝えしたいことがありましたら、お気軽にお問い合わせください。 レビューを残しますか？</value>
   </data>
   <data name="ShowPrimaryText" xml:space="preserve">
-    <value>Yes</value>
+    <value>はい</value>
   </data>
   <data name="ShowSecondaryText" xml:space="preserve">
-    <value>Later</value>
+    <value>後で</value>
   </data>
   <data name="ShowTitle" xml:space="preserve">
-    <value>App review</value>
+    <value>アプリケーションフィードバック</value>
   </data>
   <data name="SostEnd" xml:space="preserve">
-    <value>Search for Available IPs: Completed</value>
+    <value>利用可能なIPの検索：完了</value>
   </data>
   <data name="SostPoisk" xml:space="preserve">
-    <value>Search for available IPs:</value>
+    <value>利用可能なIPを検索：</value>
   </data>
   <data name="SostTec" xml:space="preserve">
-    <value>Search for available IPs:</value>
+    <value>利用可能なIPを検索：</value>
   </data>
   <data name="Start.Content" xml:space="preserve">
-    <value>Start</value>
+    <value>スタート</value>
   </data>
   <data name="Start.Label" xml:space="preserve">
-    <value>Start</value>
+    <value>スタート</value>
   </data>
   <data name="StIp.Header" xml:space="preserve">
-    <value>Initial IP value:</value>
+    <value>初期IP値：</value>
   </data>
   <data name="Stop.Content" xml:space="preserve">
-    <value>Stop</value>
+    <value>やめて</value>
   </data>
   <data name="Stop.Label" xml:space="preserve">
-    <value>Stop</value>
+    <value>やめて</value>
   </data>
   <data name="StP.Header" xml:space="preserve">
-    <value>Initial port value:</value>
+    <value>初期ポート値：</value>
   </data>
   <data name="TecPort" xml:space="preserve">
-    <value>Searching for open ports. Port:</value>
+    <value>開いているポートを検索しています。 ポート：</value>
   </data>
   <data name="TurboToggle.Header" xml:space="preserve">
-    <value>Fast network scan</value>
+    <value>高速ネットワークスキャン</value>
   </data>
   <data name="YIP.Header" xml:space="preserve">
-    <value>Your IP</value>
+    <value>あなたのIP</value>
   </data>
   <data name="YName.Header" xml:space="preserve">
-    <value>Your online name</value>
+    <value>あなたのオンライン名</value>
   </data>
 </root>

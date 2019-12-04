@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="ScanIP.PageDNSScanner"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ScanIP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <CommandBar Grid.ColumnSpan="2" VerticalContentAlignment="Center">
+            <AppBarButton Label="Scan" Icon="Play" Click="AppBarButton_Click_2"/>
+        </CommandBar>
+        <TextBox x:Name="textDNS" Text="www.microsoft.com" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <ListView Grid.Row="2" Header="IP" x:Name="IPList" ItemsSource="{x:Bind  viewIP.ListDNSIP}" Margin="16,0,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <TextBlock Text="{x:Bind }"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView Grid.Row="2" Grid.Column="1" Header="Aliases" x:Name="AlList" ItemsSource="{x:Bind  viewIP.ListDNSAl}" Margin="16,0,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <TextBlock Text="{x:Bind }"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>

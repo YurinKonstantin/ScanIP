@@ -118,99 +118,99 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DiapIP.Text" xml:space="preserve">
-    <value>IP range</value>
+    <value>Plage IP</value>
   </data>
   <data name="DiapPort.Text" xml:space="preserve">
-    <value>Port range</value>
+    <value>Port gamme</value>
   </data>
   <data name="DostIP.Text" xml:space="preserve">
-    <value>Available IP</value>
+    <value>IP disponible</value>
   </data>
   <data name="EnIp.Header" xml:space="preserve">
-    <value>Final IP value:</value>
+    <value>Valeur IP finale:</value>
   </data>
   <data name="EnP.Header" xml:space="preserve">
-    <value>Final port value:</value>
+    <value>Valeur finale du port:</value>
   </data>
   <data name="IpListView.Header" xml:space="preserve">
-    <value>Available IP</value>
+    <value>IP disponible</value>
   </data>
   <data name="MesHead" xml:space="preserve">
-    <value>Completing a network scan</value>
+    <value>Effectuer une analyse du réseau</value>
   </data>
   <data name="MesText" xml:space="preserve">
-    <value>Scanning of the network of selected values is complete!</value>
+    <value>L'analyse du réseau de valeurs sélectionnées est terminée!</value>
   </data>
   <data name="NoIterminate" xml:space="preserve">
-    <value>Undefined</value>
+    <value>Non défini</value>
   </data>
   <data name="Open" xml:space="preserve">
-    <value>is open</value>
+    <value>Ouvert</value>
   </data>
   <data name="OpenPort.Text" xml:space="preserve">
-    <value>Open ports</value>
+    <value>Ports ouverts</value>
   </data>
   <data name="OpensPorts" xml:space="preserve">
-    <value>Open ports</value>
+    <value>Ports ouverts</value>
   </data>
   <data name="Setting.Content" xml:space="preserve">
-    <value>Setting</value>
+    <value>Paramètres</value>
   </data>
   <data name="Setting.Label" xml:space="preserve">
-    <value>Setting</value>
+    <value>Paramètres</value>
   </data>
   <data name="ShowCloseText" xml:space="preserve">
-    <value>Not</value>
+    <value>Non</value>
   </data>
   <data name="ShowContent" xml:space="preserve">
-    <value>If you have something to tell about the application, we will be happy to hear your wishes. Want to leave a review?</value>
+    <value>Si vous avez quelque chose à dire sur l'application, nous serons heureux de connaître vos souhaits. Voulez-vous laisser un commentaire?</value>
   </data>
   <data name="ShowPrimaryText" xml:space="preserve">
-    <value>Yes</value>
+    <value>Oui</value>
   </data>
   <data name="ShowSecondaryText" xml:space="preserve">
-    <value>Later</value>
+    <value>Plus tard</value>
   </data>
   <data name="ShowTitle" xml:space="preserve">
-    <value>App review</value>
+    <value>Commentaires sur l'application</value>
   </data>
   <data name="SostEnd" xml:space="preserve">
-    <value>Search for Available IPs: Completed</value>
+    <value>Rechercher les IP disponibles: Terminé</value>
   </data>
   <data name="SostPoisk" xml:space="preserve">
-    <value>Search for available IPs:</value>
+    <value>Rechercher les IP disponibles:</value>
   </data>
   <data name="SostTec" xml:space="preserve">
-    <value>Search for available IPs:</value>
+    <value>Rechercher les IP disponibles:</value>
   </data>
   <data name="Start.Content" xml:space="preserve">
-    <value>Start</value>
+    <value>Début</value>
   </data>
   <data name="Start.Label" xml:space="preserve">
-    <value>Start</value>
+    <value>Début</value>
   </data>
   <data name="StIp.Header" xml:space="preserve">
-    <value>Initial IP value:</value>
+    <value>Valeur IP initiale:</value>
   </data>
   <data name="Stop.Content" xml:space="preserve">
-    <value>Stop</value>
+    <value>Arrêter</value>
   </data>
   <data name="Stop.Label" xml:space="preserve">
-    <value>Stop</value>
+    <value>Arrêter</value>
   </data>
   <data name="StP.Header" xml:space="preserve">
-    <value>Initial port value:</value>
+    <value>Valeur initiale du port:</value>
   </data>
   <data name="TecPort" xml:space="preserve">
-    <value>Searching for open ports. Port:</value>
+    <value>Recherche de ports ouverts. Port:</value>
   </data>
   <data name="TurboToggle.Header" xml:space="preserve">
-    <value>Fast network scan</value>
+    <value>Scan rapide du réseau</value>
   </data>
   <data name="YIP.Header" xml:space="preserve">
-    <value>Your IP</value>
+    <value>Votre IP</value>
   </data>
   <data name="YName.Header" xml:space="preserve">
-    <value>Your online name</value>
+    <value>Votre nom en ligne</value>
   </data>
 </root>
