@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ScanIPWinUI3 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ScanIPWinUI3 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
