@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ScanIPPro (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ScanIPPro (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
