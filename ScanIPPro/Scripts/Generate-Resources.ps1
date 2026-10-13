@@ -1,0 +1,205 @@
+$baseDir = Split-Path $PSScriptRoot -Parent
+$header = @'
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+'@
+
+$en = @{
+  "AppTitle.Text"="ScanIP Pro"
+  "ScanButton.Content"="Scan"
+  "ScanButton.Cancel"="Cancel"
+  "ClearButton.Content"="Clear"
+  "ExportButton.Content"="Export"
+  "SettingsButton.ToolTip"="Settings"
+  "IpRangeTextBox.PlaceholderText"="Enter IP or range (e.g. 192.168.1.1-254)"
+  "SearchBox.PlaceholderText"="Search by IP, hostname, MAC or vendor..."
+  "FilterComboBoxItemAll.Content"="All devices"
+  "FilterComboBoxItemOnline.Content"="Only online"
+  "FilterComboBoxItemOffline.Content"="Only offline"
+  "ClearFilterButton.Content"="Clear filter"
+  "PivotDevices.Header"="Devices"
+  "PivotPorts.Header"="Ports"
+  "PivotPing.Header"="Ping"
+  "PivotTraceroute.Header"="Traceroute"
+  "SelectedDeviceInfo.Text"="Select an online device to scan ports"
+  "Status.Default"="Ready to scan"
+  "DeviceCount.Format"="Devices: {0} | Online: {1} | Shown: {2} | Ports: {3}"
+  "Dialog.Error.Title"="Error"
+  "Dialog.Error.InvalidIP"="Enter an IP address or range (e.g. 192.168.1.1-254)"
+  "Dialog.Error.InvalidRange"="Invalid IP address or range format"
+  "Dialog.OK"="OK"
+  "ExportDialog.Title"="Select export format"
+  "ExportDialog.Primary"="Export"
+  "ExportDialog.Secondary"="Cancel"
+  "ExportDialog.ChooseFormat"="Choose file format:"
+  "ExportDialog.NoData"="No data to export. Please scan first."
+  "ExportDialog.Success"="Export completed successfully"
+  "ExportDialog.Failure"="Failed to export data."
+  "ExportDialog.NoTitle"="Export"
+  "Scanning.Progress"="Scanning {0} addresses..."
+  "Scanning.ProgressCount"="Scanning {0}/{1}..."
+  "Scanning.Completed"="Scan completed. Found {0} devices out of {1}."
+  "Scanning.Cancelled"="Scan cancelled."
+  "Scanning.Error"="Error: {0}"
+  "PortScan.Progress"="Scanning ports for {0}..."
+  "PortScan.Completed"="Ports for {0}: {1} open"
+  "PortScan.Cancelled"="Port scan for {0} cancelled"
+  "PortScan.Error"="Port scan error: {0}"
+  "ListCleared"="List cleared"
+  "SelectedDeviceInfo.Scanning"="Scanning ports: {0} ({1})"
+  "SelectedDeviceInfo.SelectOnline"="Select an online device to scan ports"
+  "HostName.Unknown"="Unknown"
+  "Status.Online"="Online"
+  "Status.Offline"="Offline"
+  "ThemeToggle.ToolTip"="Toggle theme"
+  "Column.IP"="IP"
+  "Column.Host"="Host"
+  "Column.MAC"="MAC"
+  "Column.Vendor"="Vendor"
+  "Column.Ports"="Ports"
+  "Column.RTT"="RTT"
+  "Column.Status"="Status"
+  "Column.PortStatus"="Status"
+  "Column.Port"="Port"
+  "Column.Protocol"="Protocol"
+  "Column.Service"="Service"
+  "Column.Banner"="Banner"
+  "Empty.NoDevices"="No devices found. Start a scan."
+  "Empty.SelectDevice"="Select a device from the list"
+  "Empty.NoPorts"="No port scan results"
+  "Settings.Title"="Settings"
+  "Settings.Language"="Language"
+  "Settings.Theme"="Theme"
+  "Settings.ThemeLight"="Light"
+  "Settings.ThemeDark"="Dark"
+  "Settings.ThemeSystem"="System"
+  "Settings.PingTimeout"="Ping timeout (ms)"
+  "Settings.Concurrency"="Parallel scans"
+  "Settings.OnlineOnly"="Show only online devices"
+  "Settings.Save"="Save"
+  "Settings.Saved"="Settings saved"
+  "QuickAction.Copy"="Copy IP"
+  "QuickAction.RDP"="Remote Desktop"
+  "QuickAction.HTTP"="Open HTTP"
+  "QuickAction.HTTPS"="Open HTTPS"
+  "QuickAction.SMB"="Open SMB share"
+  "QuickAction.WoL"="Wake on LAN"
+  "QuickAction.Favorite"="Add to favorites"
+  "QuickAction.FavoriteRemove"="Remove from favorites"
+  "QuickAction.Copied"="IP copied"
+  "QuickAction.WoLSent"="Wake-on-LAN packet sent"
+  "QuickAction.WoLFailed"="Failed to send Wake-on-LAN"
+  "Ping.Title"="Continuous ping"
+  "Ping.Start"="Start"
+  "Ping.Stop"="Stop"
+  "Ping.Target"="Target host"
+  "Ping.Waiting"="Enter a host and press Start"
+  "Traceroute.Title"="Traceroute"
+  "Traceroute.Start"="Start"
+  "Traceroute.Stop"="Stop"
+  "Traceroute.Target"="Target host"
+  "Traceroute.Waiting"="Enter a host and press Start"
+  "Traceroute.Hop"="Hop"
+  "Traceroute.Address"="Address"
+  "Traceroute.Host"="Host"
+  "Traceroute.RTT"="RTT"
+  "PortStatus.Open"="Open"
+  "PortStatus.Closed"="Closed"
+  "PortStatus.Filtered"="Filtered"
+  "PortStatus.Unknown"="Unknown"
+  "Ports.NoneOpen"="No open ports"
+  "Unit.Milliseconds"="{0} ms"
+  "Export.Format.Csv"="CSV"
+  "Export.Format.Json"="JSON"
+  "Export.Format.Txt"="Text"
+  "Export.Format.Html"="HTML"
+  "Export.Csv"="CSV file"
+  "Export.Json"="JSON file"
+  "Export.Txt"="Text file"
+  "Export.Html"="HTML file"
+  "Export.Title"="ScanIP Pro - Scan results"
+  "Export.Date"="Date"
+  "Export.TotalDevices"="Total devices"
+  "Export.Online"="Online"
+  "Export.Columns"="IP;Hostname;MAC;Vendor;Open ports;RTT;Status"
+  "Export.ReportTitle"="ScanIP Pro - Scan results"
+  "Navigation.Devices"="Scanner"
+  "Navigation.Settings"="Settings"
+}
+
+$overrides = @{
+  "ru-RU" = @{
+    "ScanButton.Content"="Сканировать"; "ScanButton.Cancel"="Отмена"; "ClearButton.Content"="Очистить"; "ExportButton.Content"="Экспорт"
+    "SettingsButton.ToolTip"="Настройки"; "IpRangeTextBox.PlaceholderText"="Введите IP или диапазон (например, 192.168.1.1-254)"
+    "SearchBox.PlaceholderText"="Поиск по IP, имени, MAC или производителю..."
+    "FilterComboBoxItemAll.Content"="Все устройства"; "FilterComboBoxItemOnline.Content"="Только онлайн"; "FilterComboBoxItemOffline.Content"="Только офлайн"
+    "ClearFilterButton.Content"="Сбросить"; "PivotDevices.Header"="Устройства"; "PivotPorts.Header"="Порты"
+    "SelectedDeviceInfo.Text"="Выберите онлайн-устройство для сканирования портов"; "Status.Default"="Готов к сканированию"
+    "DeviceCount.Format"="Устройств: {0} | Онлайн: {1} | Показано: {2} | Портов: {3}"
+    "Dialog.Error.Title"="Ошибка"; "Dialog.Error.InvalidIP"="Введите IP-адрес или диапазон (например, 192.168.1.1-254)"
+    "Dialog.Error.InvalidRange"="Неверный формат IP-адреса или диапазона"
+    "ExportDialog.Title"="Выберите формат экспорта"; "ExportDialog.Primary"="Экспортировать"; "ExportDialog.Secondary"="Отмена"
+    "ExportDialog.ChooseFormat"="Выберите формат файла:"; "ExportDialog.NoData"="Нет данных для экспорта. Сначала выполните сканирование."
+    "ExportDialog.Success"="Экспорт выполнен успешно"; "ExportDialog.Failure"="Не удалось экспортировать данные."; "ExportDialog.NoTitle"="Экспорт"
+    "Scanning.Progress"="Сканирование {0} адресов..."; "Scanning.ProgressCount"="Сканирование {0}/{1}..."
+    "Scanning.Completed"="Сканирование завершено. Найдено {0} устройств из {1}."; "Scanning.Cancelled"="Сканирование отменено."
+    "PortScan.Progress"="Сканирование портов для {0}..."; "PortScan.Completed"="Порты для {0}: открыто {1}"
+    "PortScan.Cancelled"="Сканирование портов для {0} отменено"; "PortScan.Error"="Ошибка сканирования портов: {0}"
+    "ListCleared"="Список очищен"; "SelectedDeviceInfo.Scanning"="Сканирование портов: {0} ({1})"
+    "SelectedDeviceInfo.SelectOnline"="Выберите онлайн-устройство для сканирования портов"
+    "HostName.Unknown"="Не определено"; "Status.Online"="Онлайн"; "Status.Offline"="Офлайн"; "ThemeToggle.ToolTip"="Переключить тему"
+    "Column.Host"="Имя"; "Column.Vendor"="Производитель"; "Column.Ports"="Порты"; "Column.RTT"="Отклик"; "Column.Status"="Статус"
+    "Empty.NoDevices"="Устройства не найдены. Запустите сканирование."; "Empty.SelectDevice"="Выберите устройство из списка"
+    "Empty.NoPorts"="Нет результатов сканирования портов"; "Settings.Title"="Настройки"; "Settings.Language"="Язык"; "Settings.Theme"="Тема"
+    "Settings.ThemeLight"="Светлая"; "Settings.ThemeDark"="Тёмная"; "Settings.ThemeSystem"="Системная"
+    "Settings.PingTimeout"="Таймаут ping (мс)"; "Settings.Concurrency"="Параллельных сканов"; "Settings.OnlineOnly"="Показывать только онлайн"
+    "Settings.Save"="Сохранить"; "Settings.Saved"="Настройки сохранены"
+    "QuickAction.Copy"="Копировать IP"; "QuickAction.RDP"="Удалённый рабочий стол"; "QuickAction.HTTP"="Открыть HTTP"
+    "QuickAction.HTTPS"="Открыть HTTPS"; "QuickAction.SMB"="Открыть SMB"; "QuickAction.Favorite"="В избранное"
+    "QuickAction.FavoriteRemove"="Убрать из избранного"; "QuickAction.Copied"="IP скопирован"
+    "QuickAction.WoLSent"="Пакет Wake-on-LAN отправлен"; "QuickAction.WoLFailed"="Не удалось отправить Wake-on-LAN"
+    "Ping.Title"="Непрерывный ping"; "Ping.Start"="Старт"; "Ping.Stop"="Стоп"; "Ping.Target"="Целевой хост"
+    "Ping.Waiting"="Введите хост и нажмите Старт"; "Traceroute.Start"="Старт"; "Traceroute.Stop"="Стоп"
+    "Traceroute.Target"="Целевой хост"; "Traceroute.Waiting"="Введите хост и нажмите Старт"
+    "Traceroute.Hop"="Хоп"; "Traceroute.Address"="Адрес"; "Traceroute.Host"="Хост"; "Traceroute.RTT"="Отклик"
+    "PortStatus.Open"="Открыт"; "PortStatus.Closed"="Закрыт"; "PortStatus.Filtered"="Фильтруется"; "PortStatus.Unknown"="Неизвестно"
+    "Ports.NoneOpen"="Нет открытых"; "Unit.Milliseconds"="{0} мс"
+    "Export.Txt"="Текстовый файл"; "Export.Title"="ScanIP Pro - Результаты сканирования"
+    "Export.Date"="Дата"; "Export.TotalDevices"="Всего устройств"
+    "Export.Columns"="IP;Имя;MAC;Производитель;Порты;Отклик;Статус"; "Export.ReportTitle"="ScanIP Pro - Результаты сканирования"
+    "Navigation.Devices"="Сканер"; "Navigation.Settings"="Настройки"
+  }
+  "de-DE" = @{ "ScanButton.Content"="Scannen"; "ScanButton.Cancel"="Abbrechen"; "ClearButton.Content"="Leeren"; "SettingsButton.ToolTip"="Einstellungen"; "Status.Default"="Bereit zum Scannen"; "Settings.Title"="Einstellungen"; "Settings.Language"="Sprache"; "Navigation.Devices"="Scanner"; "Navigation.Settings"="Einstellungen"; "FilterComboBoxItemAll.Content"="Alle Geräte"; "HostName.Unknown"="Unbekannt" }
+  "fr-FR" = @{ "ScanButton.Content"="Analyser"; "ScanButton.Cancel"="Annuler"; "ClearButton.Content"="Effacer"; "SettingsButton.ToolTip"="Paramètres"; "Status.Default"="Prêt à analyser"; "Settings.Title"="Paramètres"; "Settings.Language"="Langue"; "Navigation.Devices"="Scanner"; "Navigation.Settings"="Paramètres"; "FilterComboBoxItemAll.Content"="Tous les appareils"; "HostName.Unknown"="Inconnu" }
+  "ja-JP" = @{ "ScanButton.Content"="スキャン"; "ScanButton.Cancel"="キャンセル"; "ClearButton.Content"="クリア"; "SettingsButton.ToolTip"="設定"; "Status.Default"="スキャンの準備完了"; "Settings.Title"="設定"; "Settings.Language"="言語"; "Navigation.Devices"="スキャナー"; "Navigation.Settings"="設定"; "FilterComboBoxItemAll.Content"="すべてのデバイス"; "HostName.Unknown"="不明" }
+  "zh-CN" = @{ "ScanButton.Content"="扫描"; "ScanButton.Cancel"="取消"; "ClearButton.Content"="清除"; "SettingsButton.ToolTip"="设置"; "Status.Default"="准备扫描"; "Settings.Title"="设置"; "Settings.Language"="语言"; "Navigation.Devices"="扫描器"; "Navigation.Settings"="设置"; "FilterComboBoxItemAll.Content"="所有设备"; "HostName.Unknown"="未知" }
+  "zh-TW" = @{ "ScanButton.Content"="掃描"; "ScanButton.Cancel"="取消"; "ClearButton.Content"="清除"; "SettingsButton.ToolTip"="設定"; "Status.Default"="準備掃描"; "Settings.Title"="設定"; "Settings.Language"="語言"; "Navigation.Devices"="掃描器"; "Navigation.Settings"="設定"; "FilterComboBoxItemAll.Content"="所有裝置"; "HostName.Unknown"="未知" }
+  "es-ES" = @{ "ScanButton.Content"="Escanear"; "ScanButton.Cancel"="Cancelar"; "ClearButton.Content"="Limpiar"; "SettingsButton.ToolTip"="Ajustes"; "Status.Default"="Listo para escanear"; "Settings.Title"="Ajustes"; "Settings.Language"="Idioma"; "Navigation.Devices"="Escáner"; "Navigation.Settings"="Ajustes"; "FilterComboBoxItemAll.Content"="Todos los dispositivos"; "HostName.Unknown"="Desconocido" }
+  "pt-BR" = @{ "ScanButton.Content"="Escanear"; "ScanButton.Cancel"="Cancelar"; "ClearButton.Content"="Limpar"; "SettingsButton.ToolTip"="Configurações"; "Status.Default"="Pronto para escanear"; "Settings.Title"="Configurações"; "Settings.Language"="Idioma"; "Navigation.Devices"="Scanner"; "Navigation.Settings"="Configurações"; "FilterComboBoxItemAll.Content"="Todos os dispositivos"; "HostName.Unknown"="Desconhecido" }
+  "ko-KR" = @{ "ScanButton.Content"="스캔"; "ScanButton.Cancel"="취소"; "ClearButton.Content"="지우기"; "SettingsButton.ToolTip"="설정"; "Status.Default"="스캔 준비 완료"; "Settings.Title"="설정"; "Settings.Language"="언어"; "Navigation.Devices"="스캐너"; "Navigation.Settings"="설정"; "FilterComboBoxItemAll.Content"="모든 장치"; "HostName.Unknown"="알 수 없음" }
+}
+
+$allLangs = @("en-US","ru-RU","de-DE","fr-FR","ja-JP","zh-CN","zh-TW","es-ES","pt-BR","ko-KR")
+foreach ($lang in $allLangs) {
+  $dict = @{}
+  foreach ($k in $en.Keys) { $dict[$k] = $en[$k] }
+  if ($overrides.ContainsKey($lang)) {
+    foreach ($k in $overrides[$lang].Keys) { $dict[$k] = $overrides[$lang][$k] }
+  }
+  $dir = Join-Path $baseDir "Strings\$lang"
+  New-Item -ItemType Directory -Force -Path $dir | Out-Null
+  $lines = New-Object System.Collections.Generic.List[string]
+  $lines.Add($header.TrimEnd())
+  foreach ($k in ($dict.Keys | Sort-Object)) {
+    $v = [System.Security.SecurityElement]::Escape($dict[$k])
+    $lines.Add("  <data name=`"$k`" xml:space=`"preserve`"><value>$v</value></data>")
+  }
+  $lines.Add("</root>")
+  [System.IO.File]::WriteAllLines((Join-Path $dir "Resources.resw"), $lines, [System.Text.UTF8Encoding]::new($false))
+}
+
+Write-Host "Generated $($allLangs.Count) language files"

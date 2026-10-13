@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ScanIPPro.Services;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace ScanIPPro.Models
 {
@@ -36,12 +35,17 @@ namespace ScanIPPro.Models
         public PortStatus Status
         {
             get => _status;
-            set { _status = value; OnPropertyChanged(); }
+            set
+            {
+                _status = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(StatusText));
+            }
         }
 
         public string Service
         {
-            get => _service ?? "Неизвестно";
+            get => _service ?? LocalizationService.GetString("PortStatus.Unknown");
             set { _service = value; OnPropertyChanged(); }
         }
 
@@ -51,15 +55,16 @@ namespace ScanIPPro.Models
             set { _banner = value; OnPropertyChanged(); }
         }
 
-        public string StatusText => Status switch
+        public string StatusText => LocalizationService.GetPortStatusDisplay(Status);
+
+        public void RefreshLocalizedProperties()
         {
-            PortStatus.Open => "Открыт",
-            PortStatus.Closed => "Закрыт",
-            PortStatus.Filtered => "Фильтруется",
-            _ => "Неизвестно"
-        };
+            OnPropertyChanged(nameof(Service));
+            OnPropertyChanged(nameof(StatusText));
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

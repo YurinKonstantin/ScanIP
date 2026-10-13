@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AppTitle.Text" xml:space="preserve"><value>ScanIP Pro</value></data>
+  <data name="ClearButton.Content" xml:space="preserve"><value>クリア</value></data>
+  <data name="ClearFilterButton.Content" xml:space="preserve"><value>Clear filter</value></data>
+  <data name="Column.Banner" xml:space="preserve"><value>Banner</value></data>
+  <data name="Column.Host" xml:space="preserve"><value>Host</value></data>
+  <data name="Column.IP" xml:space="preserve"><value>IP</value></data>
+  <data name="Column.MAC" xml:space="preserve"><value>MAC</value></data>
+  <data name="Column.Port" xml:space="preserve"><value>Port</value></data>
+  <data name="Column.PortStatus" xml:space="preserve"><value>Status</value></data>
+  <data name="Column.Ports" xml:space="preserve"><value>Ports</value></data>
+  <data name="Column.Protocol" xml:space="preserve"><value>Protocol</value></data>
+  <data name="Column.RTT" xml:space="preserve"><value>RTT</value></data>
+  <data name="Column.Service" xml:space="preserve"><value>Service</value></data>
+  <data name="Column.Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Column.Vendor" xml:space="preserve"><value>Vendor</value></data>
+  <data name="DeviceCount.Format" xml:space="preserve"><value>Devices: {0} | Online: {1} | Shown: {2} | Ports: {3}</value></data>
+  <data name="Dialog.Error.InvalidIP" xml:space="preserve"><value>Enter an IP address or range (e.g. 192.168.1.1-254)</value></data>
+  <data name="Dialog.Error.InvalidRange" xml:space="preserve"><value>Invalid IP address or range format</value></data>
+  <data name="Dialog.Error.Title" xml:space="preserve"><value>Error</value></data>
+  <data name="Dialog.OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Empty.NoDevices" xml:space="preserve"><value>No devices found. Start a scan.</value></data>
+  <data name="Empty.NoPorts" xml:space="preserve"><value>No port scan results</value></data>
+  <data name="Empty.SelectDevice" xml:space="preserve"><value>Select a device from the list</value></data>
+  <data name="Export.Columns" xml:space="preserve"><value>IP;Hostname;MAC;Vendor;Open ports;RTT;Status</value></data>
+  <data name="Export.Csv" xml:space="preserve"><value>CSV file</value></data>
+  <data name="Export.Date" xml:space="preserve"><value>Date</value></data>
+  <data name="Export.Format.Csv" xml:space="preserve"><value>CSV</value></data>
+  <data name="Export.Format.Html" xml:space="preserve"><value>HTML</value></data>
+  <data name="Export.Format.Json" xml:space="preserve"><value>JSON</value></data>
+  <data name="Export.Format.Txt" xml:space="preserve"><value>Text</value></data>
+  <data name="Export.Html" xml:space="preserve"><value>HTML file</value></data>
+  <data name="Export.Json" xml:space="preserve"><value>JSON file</value></data>
+  <data name="Export.Online" xml:space="preserve"><value>Online</value></data>
+  <data name="Export.ReportTitle" xml:space="preserve"><value>ScanIP Pro - Scan results</value></data>
+  <data name="Export.Title" xml:space="preserve"><value>ScanIP Pro - Scan results</value></data>
+  <data name="Export.TotalDevices" xml:space="preserve"><value>Total devices</value></data>
+  <data name="Export.Txt" xml:space="preserve"><value>Text file</value></data>
+  <data name="ExportButton.Content" xml:space="preserve"><value>Export</value></data>
+  <data name="ExportDialog.ChooseFormat" xml:space="preserve"><value>Choose file format:</value></data>
+  <data name="ExportDialog.Failure" xml:space="preserve"><value>Failed to export data.</value></data>
+  <data name="ExportDialog.NoData" xml:space="preserve"><value>No data to export. Please scan first.</value></data>
+  <data name="ExportDialog.NoTitle" xml:space="preserve"><value>Export</value></data>
+  <data name="ExportDialog.Primary" xml:space="preserve"><value>Export</value></data>
+  <data name="ExportDialog.Secondary" xml:space="preserve"><value>Cancel</value></data>
+  <data name="ExportDialog.Success" xml:space="preserve"><value>Export completed successfully</value></data>
+  <data name="ExportDialog.Title" xml:space="preserve"><value>Select export format</value></data>
+  <data name="FilterComboBoxItemAll.Content" xml:space="preserve"><value>すべてのデバイス</value></data>
+  <data name="FilterComboBoxItemOffline.Content" xml:space="preserve"><value>Only offline</value></data>
+  <data name="FilterComboBoxItemOnline.Content" xml:space="preserve"><value>Only online</value></data>
+  <data name="HostName.Unknown" xml:space="preserve"><value>不明</value></data>
+  <data name="IpRangeTextBox.PlaceholderText" xml:space="preserve"><value>Enter IP or range (e.g. 192.168.1.1-254)</value></data>
+  <data name="ListCleared" xml:space="preserve"><value>List cleared</value></data>
+  <data name="Navigation.Devices" xml:space="preserve"><value>スキャナー</value></data>
+  <data name="Navigation.Settings" xml:space="preserve"><value>設定</value></data>
+  <data name="Ping.Start" xml:space="preserve"><value>Start</value></data>
+  <data name="Ping.Stop" xml:space="preserve"><value>Stop</value></data>
+  <data name="Ping.Target" xml:space="preserve"><value>Target host</value></data>
+  <data name="Ping.Title" xml:space="preserve"><value>Continuous ping</value></data>
+  <data name="Ping.Waiting" xml:space="preserve"><value>Enter a host and press Start</value></data>
+  <data name="PingStartButton.Content" xml:space="preserve"><value>Start</value></data>
+  <data name="PingStopButton.Content" xml:space="preserve"><value>Stop</value></data>
+  <data name="PingTargetBox.PlaceholderText" xml:space="preserve"><value>Target host</value></data>
+  <data name="PivotDevices.Header" xml:space="preserve"><value>Devices</value></data>
+  <data name="PivotPing.Header" xml:space="preserve"><value>Ping</value></data>
+  <data name="PivotPorts.Header" xml:space="preserve"><value>Ports</value></data>
+  <data name="PivotTraceroute.Header" xml:space="preserve"><value>Traceroute</value></data>
+  <data name="PortScan.Cancelled" xml:space="preserve"><value>Port scan for {0} cancelled</value></data>
+  <data name="PortScan.Completed" xml:space="preserve"><value>Ports for {0}: {1} open</value></data>
+  <data name="PortScan.Error" xml:space="preserve"><value>Port scan error: {0}</value></data>
+  <data name="PortScan.Progress" xml:space="preserve"><value>Scanning ports for {0}...</value></data>
+  <data name="PortStatus.Closed" xml:space="preserve"><value>Closed</value></data>
+  <data name="PortStatus.Filtered" xml:space="preserve"><value>Filtered</value></data>
+  <data name="PortStatus.Open" xml:space="preserve"><value>Open</value></data>
+  <data name="PortStatus.Unknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="Ports.NoneOpen" xml:space="preserve"><value>No open ports</value></data>
+  <data name="QuickAction.Copied" xml:space="preserve"><value>IP copied</value></data>
+  <data name="QuickAction.Copy" xml:space="preserve"><value>Copy IP</value></data>
+  <data name="QuickAction.Favorite" xml:space="preserve"><value>Add to favorites</value></data>
+  <data name="QuickAction.FavoriteRemove" xml:space="preserve"><value>Remove from favorites</value></data>
+  <data name="QuickAction.HTTP" xml:space="preserve"><value>Open HTTP</value></data>
+  <data name="QuickAction.HTTPS" xml:space="preserve"><value>Open HTTPS</value></data>
+  <data name="QuickAction.RDP" xml:space="preserve"><value>Remote Desktop</value></data>
+  <data name="QuickAction.SMB" xml:space="preserve"><value>Open SMB share</value></data>
+  <data name="QuickAction.WoL" xml:space="preserve"><value>Wake on LAN</value></data>
+  <data name="QuickAction.WoLFailed" xml:space="preserve"><value>Failed to send Wake-on-LAN</value></data>
+  <data name="QuickAction.WoLSent" xml:space="preserve"><value>Wake-on-LAN packet sent</value></data>
+  <data name="Scan.Cancel" xml:space="preserve"><value>キャンセル</value></data>
+  <data name="Scan.Start" xml:space="preserve"><value>Scan</value></data>
+  <data name="ScanButton.Content" xml:space="preserve"><value>スキャン</value></data>
+  <data name="Scanning.Cancelled" xml:space="preserve"><value>Scan cancelled.</value></data>
+  <data name="Scanning.Completed" xml:space="preserve"><value>Scan completed. Found {0} devices out of {1}.</value></data>
+  <data name="Scanning.Error" xml:space="preserve"><value>Error: {0}</value></data>
+  <data name="Scanning.Progress" xml:space="preserve"><value>Scanning {0} addresses...</value></data>
+  <data name="Scanning.ProgressCount" xml:space="preserve"><value>Scanning {0}/{1}...</value></data>
+  <data name="SearchBox.PlaceholderText" xml:space="preserve"><value>Search by IP, hostname, MAC or vendor...</value></data>
+  <data name="SelectedDeviceInfo.Scanning" xml:space="preserve"><value>Scanning ports: {0} ({1})</value></data>
+  <data name="SelectedDeviceInfo.SelectOnline" xml:space="preserve"><value>Select an online device to scan ports</value></data>
+  <data name="SelectedDeviceInfo.Text" xml:space="preserve"><value>Select an online device to scan ports</value></data>
+  <data name="Settings.Concurrency" xml:space="preserve"><value>Parallel scans</value></data>
+  <data name="Settings.Language" xml:space="preserve"><value>言語</value></data>
+  <data name="Settings.OnlineOnly" xml:space="preserve"><value>Show only online devices</value></data>
+  <data name="Settings.PingTimeout" xml:space="preserve"><value>Ping timeout (ms)</value></data>
+  <data name="Settings.Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Settings.Saved" xml:space="preserve"><value>Settings saved</value></data>
+  <data name="Settings.Theme" xml:space="preserve"><value>Theme</value></data>
+  <data name="Settings.ThemeDark" xml:space="preserve"><value>Dark</value></data>
+  <data name="Settings.ThemeLight" xml:space="preserve"><value>Light</value></data>
+  <data name="Settings.ThemeSystem" xml:space="preserve"><value>System</value></data>
+  <data name="Settings.Title" xml:space="preserve"><value>設定</value></data>
+  <data name="SettingsButton.ToolTip" xml:space="preserve"><value>設定</value></data>
+  <data name="Status.Default" xml:space="preserve"><value>スキャンの準備完了</value></data>
+  <data name="Status.Offline" xml:space="preserve"><value>Offline</value></data>
+  <data name="Status.Online" xml:space="preserve"><value>Online</value></data>
+  <data name="ThemeToggle.ToolTip" xml:space="preserve"><value>Toggle theme</value></data>
+  <data name="Traceroute.Address" xml:space="preserve"><value>Address</value></data>
+  <data name="Traceroute.Hop" xml:space="preserve"><value>Hop</value></data>
+  <data name="Traceroute.Host" xml:space="preserve"><value>Host</value></data>
+  <data name="Traceroute.RTT" xml:space="preserve"><value>RTT</value></data>
+  <data name="Traceroute.Start" xml:space="preserve"><value>Start</value></data>
+  <data name="Traceroute.Stop" xml:space="preserve"><value>Stop</value></data>
+  <data name="Traceroute.Target" xml:space="preserve"><value>Target host</value></data>
+  <data name="Traceroute.Title" xml:space="preserve"><value>Traceroute</value></data>
+  <data name="Traceroute.Waiting" xml:space="preserve"><value>Enter a host and press Start</value></data>
+  <data name="TracerouteStartButton.Content" xml:space="preserve"><value>Start</value></data>
+  <data name="TracerouteStopButton.Content" xml:space="preserve"><value>Stop</value></data>
+  <data name="TracerouteTargetBox.PlaceholderText" xml:space="preserve"><value>Target host</value></data>
+  <data name="Unit.Milliseconds" xml:space="preserve"><value>{0} ms</value></data>
+</root>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AppTitle.Text" xml:space="preserve"><value>ScanIP Pro</value></data>
+  <data name="ClearButton.Content" xml:space="preserve"><value>Очистить</value></data>
+  <data name="ClearFilterButton.Content" xml:space="preserve"><value>Сбросить</value></data>
+  <data name="Column.Banner" xml:space="preserve"><value>Banner</value></data>
+  <data name="Column.Host" xml:space="preserve"><value>Имя</value></data>
+  <data name="Column.IP" xml:space="preserve"><value>IP</value></data>
+  <data name="Column.MAC" xml:space="preserve"><value>MAC</value></data>
+  <data name="Column.Port" xml:space="preserve"><value>Port</value></data>
+  <data name="Column.PortStatus" xml:space="preserve"><value>Status</value></data>
+  <data name="Column.Ports" xml:space="preserve"><value>Порты</value></data>
+  <data name="Column.Protocol" xml:space="preserve"><value>Protocol</value></data>
+  <data name="Column.RTT" xml:space="preserve"><value>Отклик</value></data>
+  <data name="Column.Service" xml:space="preserve"><value>Service</value></data>
+  <data name="Column.Status" xml:space="preserve"><value>Статус</value></data>
+  <data name="Column.Vendor" xml:space="preserve"><value>Производитель</value></data>
+  <data name="DeviceCount.Format" xml:space="preserve"><value>Устройств: {0} | Онлайн: {1} | Показано: {2} | Портов: {3}</value></data>
+  <data name="Dialog.Error.InvalidIP" xml:space="preserve"><value>Введите IP-адрес или диапазон (например, 192.168.1.1-254)</value></data>
+  <data name="Dialog.Error.InvalidRange" xml:space="preserve"><value>Неверный формат IP-адреса или диапазона</value></data>
+  <data name="Dialog.Error.Title" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="Dialog.OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Empty.NoDevices" xml:space="preserve"><value>Устройства не найдены. Запустите сканирование.</value></data>
+  <data name="Empty.NoPorts" xml:space="preserve"><value>Нет результатов сканирования портов</value></data>
+  <data name="Empty.SelectDevice" xml:space="preserve"><value>Выберите устройство из списка</value></data>
+  <data name="Export.Columns" xml:space="preserve"><value>IP;Имя;MAC;Производитель;Порты;Отклик;Статус</value></data>
+  <data name="Export.Csv" xml:space="preserve"><value>CSV file</value></data>
+  <data name="Export.Date" xml:space="preserve"><value>Дата</value></data>
+  <data name="Export.Format.Csv" xml:space="preserve"><value>CSV</value></data>
+  <data name="Export.Format.Html" xml:space="preserve"><value>HTML</value></data>
+  <data name="Export.Format.Json" xml:space="preserve"><value>JSON</value></data>
+  <data name="Export.Format.Txt" xml:space="preserve"><value>Text</value></data>
+  <data name="Export.Html" xml:space="preserve"><value>HTML file</value></data>
+  <data name="Export.Json" xml:space="preserve"><value>JSON file</value></data>
+  <data name="Export.Online" xml:space="preserve"><value>Online</value></data>
+  <data name="Export.ReportTitle" xml:space="preserve"><value>ScanIP Pro - Результаты сканирования</value></data>
+  <data name="Export.Title" xml:space="preserve"><value>ScanIP Pro - Результаты сканирования</value></data>
+  <data name="Export.TotalDevices" xml:space="preserve"><value>Всего устройств</value></data>
+  <data name="Export.Txt" xml:space="preserve"><value>Текстовый файл</value></data>
+  <data name="ExportButton.Content" xml:space="preserve"><value>Экспорт</value></data>
+  <data name="ExportDialog.ChooseFormat" xml:space="preserve"><value>Выберите формат файла:</value></data>
+  <data name="ExportDialog.Failure" xml:space="preserve"><value>Не удалось экспортировать данные.</value></data>
+  <data name="ExportDialog.NoData" xml:space="preserve"><value>Нет данных для экспорта. Сначала выполните сканирование.</value></data>
+  <data name="ExportDialog.NoTitle" xml:space="preserve"><value>Экспорт</value></data>
+  <data name="ExportDialog.Primary" xml:space="preserve"><value>Экспортировать</value></data>
+  <data name="ExportDialog.Secondary" xml:space="preserve"><value>Отмена</value></data>
+  <data name="ExportDialog.Success" xml:space="preserve"><value>Экспорт выполнен успешно</value></data>
+  <data name="ExportDialog.Title" xml:space="preserve"><value>Выберите формат экспорта</value></data>
+  <data name="FilterComboBoxItemAll.Content" xml:space="preserve"><value>Все устройства</value></data>
+  <data name="FilterComboBoxItemOffline.Content" xml:space="preserve"><value>Только офлайн</value></data>
+  <data name="FilterComboBoxItemOnline.Content" xml:space="preserve"><value>Только онлайн</value></data>
+  <data name="HostName.Unknown" xml:space="preserve"><value>Не определено</value></data>
+  <data name="IpRangeTextBox.PlaceholderText" xml:space="preserve"><value>Введите IP или диапазон (например, 192.168.1.1-254)</value></data>
+  <data name="ListCleared" xml:space="preserve"><value>Список очищен</value></data>
+  <data name="Navigation.Devices" xml:space="preserve"><value>Сканер</value></data>
+  <data name="Navigation.Settings" xml:space="preserve"><value>Настройки</value></data>
+  <data name="Ping.Start" xml:space="preserve"><value>Старт</value></data>
+  <data name="Ping.Stop" xml:space="preserve"><value>Стоп</value></data>
+  <data name="Ping.Target" xml:space="preserve"><value>Целевой хост</value></data>
+  <data name="Ping.Title" xml:space="preserve"><value>Непрерывный ping</value></data>
+  <data name="Ping.Waiting" xml:space="preserve"><value>Введите хост и нажмите Старт</value></data>
+  <data name="PingStartButton.Content" xml:space="preserve"><value>Старт</value></data>
+  <data name="PingStopButton.Content" xml:space="preserve"><value>Стоп</value></data>
+  <data name="PingTargetBox.PlaceholderText" xml:space="preserve"><value>Целевой хост</value></data>
+  <data name="PivotDevices.Header" xml:space="preserve"><value>Устройства</value></data>
+  <data name="PivotPing.Header" xml:space="preserve"><value>Ping</value></data>
+  <data name="PivotPorts.Header" xml:space="preserve"><value>Порты</value></data>
+  <data name="PivotTraceroute.Header" xml:space="preserve"><value>Traceroute</value></data>
+  <data name="PortScan.Cancelled" xml:space="preserve"><value>Сканирование портов для {0} отменено</value></data>
+  <data name="PortScan.Completed" xml:space="preserve"><value>Порты для {0}: открыто {1}</value></data>
+  <data name="PortScan.Error" xml:space="preserve"><value>Ошибка сканирования портов: {0}</value></data>
+  <data name="PortScan.Progress" xml:space="preserve"><value>Сканирование портов для {0}...</value></data>
+  <data name="PortStatus.Closed" xml:space="preserve"><value>Закрыт</value></data>
+  <data name="PortStatus.Filtered" xml:space="preserve"><value>Фильтруется</value></data>
+  <data name="PortStatus.Open" xml:space="preserve"><value>Открыт</value></data>
+  <data name="PortStatus.Unknown" xml:space="preserve"><value>Неизвестно</value></data>
+  <data name="Ports.NoneOpen" xml:space="preserve"><value>Нет открытых</value></data>
+  <data name="QuickAction.Copied" xml:space="preserve"><value>IP скопирован</value></data>
+  <data name="QuickAction.Copy" xml:space="preserve"><value>Копировать IP</value></data>
+  <data name="QuickAction.Favorite" xml:space="preserve"><value>В избранное</value></data>
+  <data name="QuickAction.FavoriteRemove" xml:space="preserve"><value>Убрать из избранного</value></data>
+  <data name="QuickAction.HTTP" xml:space="preserve"><value>Открыть HTTP</value></data>
+  <data name="QuickAction.HTTPS" xml:space="preserve"><value>Открыть HTTPS</value></data>
+  <data name="QuickAction.RDP" xml:space="preserve"><value>Удалённый рабочий стол</value></data>
+  <data name="QuickAction.SMB" xml:space="preserve"><value>Открыть SMB</value></data>
+  <data name="QuickAction.WoL" xml:space="preserve"><value>Wake on LAN</value></data>
+  <data name="QuickAction.WoLFailed" xml:space="preserve"><value>Не удалось отправить Wake-on-LAN</value></data>
+  <data name="QuickAction.WoLSent" xml:space="preserve"><value>Пакет Wake-on-LAN отправлен</value></data>
+  <data name="Scan.Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="Scan.Start" xml:space="preserve"><value>Сканировать</value></data>
+  <data name="ScanButton.Content" xml:space="preserve"><value>Сканировать</value></data>
+  <data name="Scanning.Cancelled" xml:space="preserve"><value>Сканирование отменено.</value></data>
+  <data name="Scanning.Completed" xml:space="preserve"><value>Сканирование завершено. Найдено {0} устройств из {1}.</value></data>
+  <data name="Scanning.Error" xml:space="preserve"><value>Error: {0}</value></data>
+  <data name="Scanning.Progress" xml:space="preserve"><value>Сканирование {0} адресов...</value></data>
+  <data name="Scanning.ProgressCount" xml:space="preserve"><value>Сканирование {0}/{1}...</value></data>
+  <data name="SearchBox.PlaceholderText" xml:space="preserve"><value>Поиск по IP, имени, MAC или производителю...</value></data>
+  <data name="SelectedDeviceInfo.Scanning" xml:space="preserve"><value>Сканирование портов: {0} ({1})</value></data>
+  <data name="SelectedDeviceInfo.SelectOnline" xml:space="preserve"><value>Выберите онлайн-устройство для сканирования портов</value></data>
+  <data name="SelectedDeviceInfo.Text" xml:space="preserve"><value>Выберите онлайн-устройство для сканирования портов</value></data>
+  <data name="Settings.Concurrency" xml:space="preserve"><value>Параллельных сканов</value></data>
+  <data name="Settings.Language" xml:space="preserve"><value>Язык</value></data>
+  <data name="Settings.OnlineOnly" xml:space="preserve"><value>Показывать только онлайн</value></data>
+  <data name="Settings.PingTimeout" xml:space="preserve"><value>Таймаут ping (мс)</value></data>
+  <data name="Settings.Save" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="Settings.Saved" xml:space="preserve"><value>Настройки сохранены</value></data>
+  <data name="Settings.Theme" xml:space="preserve"><value>Тема</value></data>
+  <data name="Settings.ThemeDark" xml:space="preserve"><value>Тёмная</value></data>
+  <data name="Settings.ThemeLight" xml:space="preserve"><value>Светлая</value></data>
+  <data name="Settings.ThemeSystem" xml:space="preserve"><value>Системная</value></data>
+  <data name="Settings.Title" xml:space="preserve"><value>Настройки</value></data>
+  <data name="SettingsButton.ToolTip" xml:space="preserve"><value>Настройки</value></data>
+  <data name="Status.Default" xml:space="preserve"><value>Готов к сканированию</value></data>
+  <data name="Status.Offline" xml:space="preserve"><value>Офлайн</value></data>
+  <data name="Status.Online" xml:space="preserve"><value>Онлайн</value></data>
+  <data name="ThemeToggle.ToolTip" xml:space="preserve"><value>Переключить тему</value></data>
+  <data name="Traceroute.Address" xml:space="preserve"><value>Адрес</value></data>
+  <data name="Traceroute.Hop" xml:space="preserve"><value>Хоп</value></data>
+  <data name="Traceroute.Host" xml:space="preserve"><value>Хост</value></data>
+  <data name="Traceroute.RTT" xml:space="preserve"><value>Отклик</value></data>
+  <data name="Traceroute.Start" xml:space="preserve"><value>Старт</value></data>
+  <data name="Traceroute.Stop" xml:space="preserve"><value>Стоп</value></data>
+  <data name="Traceroute.Target" xml:space="preserve"><value>Целевой хост</value></data>
+  <data name="Traceroute.Title" xml:space="preserve"><value>Traceroute</value></data>
+  <data name="Traceroute.Waiting" xml:space="preserve"><value>Введите хост и нажмите Старт</value></data>
+  <data name="TracerouteStartButton.Content" xml:space="preserve"><value>Старт</value></data>
+  <data name="TracerouteStopButton.Content" xml:space="preserve"><value>Стоп</value></data>
+  <data name="TracerouteTargetBox.PlaceholderText" xml:space="preserve"><value>Целевой хост</value></data>
+  <data name="Unit.Milliseconds" xml:space="preserve"><value>{0} мс</value></data>
+</root>

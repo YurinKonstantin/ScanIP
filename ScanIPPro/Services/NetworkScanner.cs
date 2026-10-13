@@ -4,12 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ScanIPPro.Services
 {
+    public class ScanOptions
+    {
+        public bool OnlineOnly { get; set; } = true;
+        public int PingTimeoutMs { get; set; } = 2000;
+        public int Concurrency { get; set; } = 20;
+    }
+
     /// <summary>
     /// Основной сервис сканирования сети
     /// </summary>
@@ -17,7 +23,6 @@ namespace ScanIPPro.Services
     {
         private readonly PortScanner _portScanner;
         private readonly MacResolver _macResolver;
-        private readonly SemaphoreSlim _semaphore = new(20); // Уменьшил с 100 до 20 для стабильности
 
         public NetworkScanner()
         {
@@ -25,25 +30,29 @@ namespace ScanIPPro.Services
             _macResolver = new MacResolver();
         }
 
-        /// <summary>
-        /// Сканирование списка IP-адресов с прогрессом
-        /// </summary>
-        public async Task<List<ScanResult>> ScanIpRangeAsync(List<string> ipList,
-            IProgress<ScanResult> progress, CancellationToken token)
+        public async Task<List<ScanResult>> ScanIpRangeAsync(
+            List<string> ipList,
+            IProgress<ScanResult> progress,
+            IProgress<(int completed, int total)> scanProgress,
+            ScanOptions options,
+            CancellationToken token)
         {
             var results = new List<ScanResult>();
             var tasks = new List<Task>();
+            var semaphore = new SemaphoreSlim(Math.Max(1, options?.Concurrency ?? 20));
+            var total = ipList.Count;
+            var completed = 0;
 
             foreach (var ip in ipList)
             {
                 token.ThrowIfCancellationRequested();
-                await _semaphore.WaitAsync(token);
+                await semaphore.WaitAsync(token);
 
                 tasks.Add(Task.Run(async () =>
                 {
                     try
                     {
-                        var result = await ScanSingleIpAsync(ip, token);
+                        var result = await ScanSingleIpAsync(ip, options, token);
                         if (result != null)
                         {
                             lock (results)
@@ -55,18 +64,19 @@ namespace ScanIPPro.Services
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine($"Ошибка сканирования {ip}: {ex.Message}");
+                        System.Diagnostics.Debug.WriteLine($"Scan error {ip}: {ex.Message}");
                     }
                     finally
                     {
-                        _semaphore.Release();
+                        var done = Interlocked.Increment(ref completed);
+                        scanProgress?.Report((done, total));
+                        semaphore.Release();
                     }
                 }, token));
             }
 
             await Task.WhenAll(tasks);
 
-            // Сортировка результатов
             return results
                 .OrderBy(r => IPAddress.Parse(r.IPAddress).GetAddressBytes()
                     .Select(b => b.ToString("D3"))
@@ -74,71 +84,71 @@ namespace ScanIPPro.Services
                 .ToList();
         }
 
-        /// <summary>
-        /// Сканирование одного IP-адреса
-        /// </summary>
-        private async Task<ScanResult> ScanSingleIpAsync(string ip, CancellationToken token)
+        private async Task<ScanResult> ScanSingleIpAsync(string ip, ScanOptions options, CancellationToken token)
         {
+            options ??= new ScanOptions();
             var result = new ScanResult { IPAddress = ip };
 
             try
             {
-                // 1. ICMP Ping
                 using var ping = new Ping();
-                var reply = await ping.SendPingAsync(IPAddress.Parse(ip), 2000);
+                var reply = await ping.SendPingAsync(IPAddress.Parse(ip), options.PingTimeoutMs);
                 token.ThrowIfCancellationRequested();
 
-                if (reply.Status == IPStatus.Success)
+                if (reply.Status != IPStatus.Success)
                 {
-                    result.Status = "Online";
-                    result.RoundtripTime = reply.RoundtripTime;
+                    result.Status = ScanResult.StatusOffline;
+                    return options.OnlineOnly ? null : result;
+                }
 
-                    // 2. Получение имени хоста
-                    try
-                    {
-                        var hostEntry = await Dns.GetHostEntryAsync(ip);
-                        result.HostName = hostEntry.HostName;
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Ошибка DNS для {ip}: {ex.Message}");
-                    }
+                result.Status = ScanResult.StatusOnline;
+                result.RoundtripTime = reply.RoundtripTime;
 
-                    // 3. Получение MAC-адреса
-                    try
-                    {
-                        result.MACAddress = await _macResolver.GetMacAddressAsync(ip);
-                        result.Vendor = _macResolver.GetVendorByOUI(result.MACAddress);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Ошибка MAC для {ip}: {ex.Message}");
-                    }
+                try
+                {
+                    var hostEntry = await Dns.GetHostEntryAsync(ip);
+                    result.HostName = hostEntry.HostName;
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"DNS error {ip}: {ex.Message}");
+                }
 
-                    // 4. Сканирование портов (только популярные, чтобы не замедлять)
-                    try
-                    {
-                        result.OpenPorts = await _portScanner.ScanCommonPortsAsync(ip, token);
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Ошибка портов для {ip}: {ex.Message}");
-                    }
+                try
+                {
+                    result.MACAddress = await _macResolver.GetMacAddressAsync(ip);
+                    result.Vendor = _macResolver.GetVendorByOUI(result.MACAddress);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"MAC error {ip}: {ex.Message}");
+                }
+
+                try
+                {
+                    result.OpenPorts = await _portScanner.ScanCommonPortsAsync(ip, token);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Port error {ip}: {ex.Message}");
                 }
             }
             catch (PingException ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Ping ошибка для {ip}: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Ping error {ip}: {ex.Message}");
+                result.Status = ScanResult.StatusOffline;
+                return options.OnlineOnly ? null : result;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Общая ошибка для {ip}: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"General error {ip}: {ex.Message}");
+                result.Status = ScanResult.StatusOffline;
+                return options.OnlineOnly ? null : result;
             }
 
             return result;
         }
 
-        // Метод для сканирования портов по запросу
         public async Task<List<PortScanResult>> ScanPortsAsync(
             string ip,
             string portRange,
@@ -150,8 +160,7 @@ namespace ScanIPPro.Services
                 ip, startPort, endPort, progress, 300, token);
         }
 
-        // Вспомогательный метод для парсинга диапазона портов
-        private (int start, int end) ParsePortRange(string input)
+        private static (int start, int end) ParsePortRange(string input)
         {
             if (string.IsNullOrEmpty(input))
                 return (1, 1024);

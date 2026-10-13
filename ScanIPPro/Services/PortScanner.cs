@@ -1,4 +1,5 @@
 ﻿using ScanIPPro.Models;
+using ScanIPPro.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace ScanIPPro.Services
             await Task.WhenAll(tasks);
 
             if (!openPorts.Any())
-                return "Нет открытых";
+                return LocalizationService.GetString("Ports.NoneOpen");
 
             return string.Join(", ", openPorts
                 .OrderBy(p => p)
@@ -293,7 +294,7 @@ namespace ScanIPPro.Services
                 50001 => "SAP",
                 50010 => "SAP",
                 50050 => "SAP",
-                _ => "Неизвестно"
+                _ => LocalizationService.GetString("PortStatus.Unknown")
             };
         }
 

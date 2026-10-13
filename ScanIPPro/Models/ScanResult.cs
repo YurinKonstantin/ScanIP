@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ScanIPPro.Services;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace ScanIPPro.Models
 {
-    /// <summary>
-    /// Модель результата сканирования одного IP-адреса
-    /// </summary>
     public class ScanResult : INotifyPropertyChanged
     {
-        private string _status = "Offline";
+        public const string StatusOnline = "Online";
+        public const string StatusOffline = "Offline";
+
+        private string _status = StatusOffline;
         private string _ipAddress;
         private string _hostName;
         private string _macAddress;
@@ -27,9 +26,13 @@ namespace ScanIPPro.Models
 
         public string HostName
         {
-            get => _hostName ?? "Не определено";
-            set { _hostName = value; OnPropertyChanged(); }
+            get => string.IsNullOrEmpty(_hostName)
+                ? LocalizationService.GetString("HostName.Unknown")
+                : _hostName;
+            set { _hostName = value; OnPropertyChanged(); OnPropertyChanged(nameof(DisplayHostName)); }
         }
+
+        public string DisplayHostName => HostName;
 
         public string MACAddress
         {
@@ -58,12 +61,27 @@ namespace ScanIPPro.Models
         public string Status
         {
             get => _status;
-            set { _status = value; OnPropertyChanged(); }
+            set
+            {
+                _status = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsOnline));
+                OnPropertyChanged(nameof(DisplayStatus));
+            }
         }
 
-        public bool IsOnline => Status == "Online";
+        public string DisplayStatus => LocalizationService.GetStatusDisplay(_status);
+
+        public bool IsOnline => Status == StatusOnline;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RefreshLocalizedProperties()
+        {
+            OnPropertyChanged(nameof(HostName));
+            OnPropertyChanged(nameof(DisplayHostName));
+            OnPropertyChanged(nameof(DisplayStatus));
+        }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
