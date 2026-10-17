@@ -20,6 +20,8 @@
       in-app language switcher work for languages missing from the user's Windows language
       list (resource packages are installed only for those languages).
     -->
+    <!-- Do not auto-split Language/Scale into resource packages: single-project MSIX bundles shipped a split.scale-200 package and Store installs failed (SplashScreen.scale-200.png not found). -->
+    <AppxBundleAutoResourcePackageQualifiers>DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
     <AppxDefaultResourceQualifiers>Language=en-US;ru-RU;de-DE;es-ES;fr-FR;ja-JP;ko-KR;pt-BR;zh-CN;zh-TW</AppxDefaultResourceQualifiers>
   </PropertyGroup>
 
@@ -62,7 +64,7 @@
   <!-- Publish Properties -->
   <PropertyGroup>
     <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
-    <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">False</PublishReadyToRun>
+    <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">False</PublishTrimmed>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>

@@ -1,0 +1,11 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // App is MSIX-packaged (needs package identity): deploy/run it via Visual Studio or the Start menu, then attach here.
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}
